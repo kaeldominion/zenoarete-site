@@ -9,7 +9,7 @@
 <meta property="og:description" content="A Private Sanctuary for Training, Recovery, and Luxury Living. 6 Suites · 2 Pools · Ice Bath · Sauna · Gym · Chef.">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://zenoarete.com">
-<meta property="og:image" content="/og-image.jpg">
+<meta property="og:image" content="/images/hero.jpg">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="Zeno Arete — Luxury Villa, Bali">
 <meta name="twitter:description" content="A Private Sanctuary for Training, Recovery, and Luxury Living.">
@@ -35,14 +35,16 @@ body{background:var(--bg);color:var(--text);font-family:var(--font-body);font-we
 img{max-width:100%;display:block}
 a{color:var(--accent);text-decoration:none}
 
+/* Parallax background — fixed behind everything */
+.parallax-bg{position:fixed;inset:0;background:url('/images/hero.jpg') center/cover no-repeat;z-index:-1}
+
 /* Fade-in on scroll */
 .reveal{opacity:0;transform:translateY(40px);transition:opacity .8s ease,transform .8s ease}
 .reveal.visible{opacity:1;transform:translateY(0)}
 
-/* Hero */
+/* Hero — transparent, parallax shows through */
 .hero{min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;position:relative;padding:2rem}
-.hero-bg{position:absolute;inset:0;background:#181614;display:flex;align-items:center;justify-content:center;font-size:1.2rem;color:#555;letter-spacing:.3em;text-transform:uppercase;z-index:0}
-.hero-bg::after{content:'';position:absolute;inset:0;background:linear-gradient(to bottom,rgba(10,10,10,.3) 0%,rgba(10,10,10,.85) 100%)}
+.hero::after{content:'';position:absolute;inset:0;background:linear-gradient(to bottom,rgba(10,10,10,.3) 0%,rgba(10,10,10,.7) 100%);z-index:0}
 .hero-content{position:relative;z-index:1;max-width:800px}
 .hero h1{font-family:var(--font-display);font-size:clamp(3rem,8vw,6rem);font-weight:400;letter-spacing:.05em;margin-bottom:.25em}
 .hero .subtitle{font-family:var(--font-display);font-style:italic;font-size:clamp(1rem,2.5vw,1.4rem);color:var(--muted);margin-bottom:1.5rem}
@@ -55,11 +57,14 @@ a{color:var(--accent);text-decoration:none}
 .btn-fill{background:var(--accent);color:#0a0a0a}
 .btn-fill:hover{background:#b8923d}
 
-/* Sections */
+/* Card sections — solid opaque backgrounds, no parallax bleed */
+.card{background:var(--bg);position:relative;z-index:1}
+.card-dark{background:var(--bg2)}
+
+/* Content sections */
 section{padding:6rem 2rem;max-width:960px;margin:0 auto}
-.section-wide{max-width:100%;padding:6rem 0}
-.img-placeholder{width:100%;aspect-ratio:16/7;background:#181614;display:flex;align-items:center;justify-content:center;color:#444;font-size:.9rem;letter-spacing:.3em;text-transform:uppercase}
-.img-placeholder-tall{aspect-ratio:16/9}
+.section-img{max-width:100%;padding:0}
+.section-img img{width:100%;object-fit:cover;max-height:70vh}
 
 h2{font-family:var(--font-display);font-size:clamp(2rem,4vw,3rem);font-weight:400;margin-bottom:1.5rem}
 h3{font-family:var(--font-display);font-size:1.6rem;font-weight:400;margin-bottom:1rem;color:var(--accent)}
@@ -70,28 +75,42 @@ p{margin-bottom:1.2rem;color:var(--muted)}
 
 /* Highlights grid */
 .highlights{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:1.5rem;margin-top:2rem}
-.highlight-item{padding:1.5rem;background:var(--bg2);border:1px solid #222;border-radius:4px}
+.highlight-item{padding:1.5rem;background:rgba(255,255,255,.03);border:1px solid #222;border-radius:4px}
 .highlight-item span{font-size:1.4rem;margin-right:.5rem}
 
+/* Bottom booking — transparent, parallax shows through again */
+.book-section{position:relative;z-index:1;padding:8rem 2rem;text-align:center}
+.book-section::before{content:'';position:absolute;inset:0;background:rgba(10,10,10,.65);z-index:0}
+.book-section .book-content{position:relative;z-index:1;max-width:700px;margin:0 auto}
+
 /* Footer */
-footer{border-top:1px solid #222;padding:3rem 2rem;text-align:center}
+footer{background:var(--bg);position:relative;z-index:1;border-top:1px solid #222;padding:3rem 2rem;text-align:center}
 footer .links{display:flex;gap:2rem;justify-content:center;margin-bottom:1rem;flex-wrap:wrap}
 footer .links a{font-size:.8rem;letter-spacing:.15em;text-transform:uppercase;color:var(--muted);transition:color .3s}
 footer .links a:hover{color:var(--accent)}
 footer .copy{font-size:.75rem;color:#555}
 
+/* WhatsApp floating button */
+.whatsapp-float{position:fixed;bottom:24px;right:24px;width:60px;height:60px;background:#25D366;border-radius:50%;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 12px rgba(0,0,0,.4);z-index:999;transition:transform .3s,box-shadow .3s}
+.whatsapp-float:hover{transform:scale(1.1);box-shadow:0 6px 20px rgba(0,0,0,.5)}
+.whatsapp-float svg{width:32px;height:32px;fill:#fff}
+
 @media(max-width:600px){
   section{padding:4rem 1.5rem}
   .cta-group{flex-direction:column;align-items:center}
   .btn{width:100%;text-align:center}
+  .whatsapp-float{bottom:16px;right:16px;width:52px;height:52px}
+  .whatsapp-float svg{width:28px;height:28px}
 }
 </style>
 </head>
 <body>
 
-<!-- HERO -->
+<!-- Fixed parallax background -->
+<div class="parallax-bg"></div>
+
+<!-- HERO — transparent, parallax visible -->
 <header class="hero">
-  <div class="hero-bg" style="background:url('/images/hero.jpg') center/cover no-repeat"></div>
   <div class="hero-content">
     <h1>Zeno Arete</h1>
     <p class="subtitle">A Private Sanctuary for Training, Recovery, and Luxury Living</p>
@@ -106,83 +125,99 @@ footer .copy{font-size:.75rem;color:#555}
   </div>
 </header>
 
-<!-- SECTION 1 — PHILOSOPHY -->
-<section class="reveal">
-  <p class="section-label">A Retreat for the Disciplined</p>
-  <blockquote>"To move the world, you must first move yourself."</blockquote>
-  <p>This villa was born from philosophy — not trend. Zeno Arete is a 1,400m² private sanctuary built for transformation. A home for warriors, creators, and thinkers. Here, beauty meets intention, indulgence meets structure. Every feature supports your rise — in body, mind, and spirit.</p>
-</section>
+<!-- CARDS START — solid backgrounds block the parallax -->
 
-<div class="section-wide reveal">
+<!-- SECTION 1 — PHILOSOPHY -->
+<div class="card">
+  <section class="reveal">
+    <p class="section-label">A Retreat for the Disciplined</p>
+    <blockquote>"To move the world, you must first move yourself."</blockquote>
+    <p>This villa was born from philosophy — not trend. Zeno Arete is a 1,400m² private sanctuary built for transformation. A home for warriors, creators, and thinkers. Here, beauty meets intention, indulgence meets structure. Every feature supports your rise — in body, mind, and spirit.</p>
+  </section>
+</div>
+
+<div class="card section-img">
   <img src="/images/villa-exterior.jpg" alt="Villa Zeno Arete exterior with tropical landscaping" style="width:100%;object-fit:cover;max-height:70vh">
 </div>
 
 <!-- SECTION 2 — HIGHLIGHTS -->
-<section id="highlights" class="reveal">
-  <p class="section-label">The Highlights</p>
-  <h2>Crafted for Peak Living</h2>
-  <div class="highlights">
-    <div class="highlight-item"><span>🛏</span> 6 suites that feel like 5-star hotel rooms</div>
-    <div class="highlight-item"><span>🌊</span> 2 pools — including glass-bottom plunge + slide from master</div>
-    <div class="highlight-item"><span>🔊</span> Sonos in every room, Arc Ultra &amp; Era300 in master + cinema</div>
-    <div class="highlight-item"><span>🧊</span> Ice bath · 🔥 Sauna · 💦 Jacuzzi</div>
-    <div class="highlight-item"><span>💪</span> Private gym · 🧘‍♂️ Yoga-ready outdoor spaces</div>
-    <div class="highlight-item"><span>🍳</span> Full-time chef (guests just cover food costs)</div>
-    <div class="highlight-item"><span>🎉</span> Indoor-outdoor entertainment areas + swim-up bar</div>
-    <div class="highlight-item"><span>📸</span> Hyper-photogenic architecture + lighting throughout</div>
-  </div>
-</section>
+<div class="card-dark card">
+  <section id="highlights" class="reveal">
+    <p class="section-label">The Highlights</p>
+    <h2>Crafted for Peak Living</h2>
+    <div class="highlights">
+      <div class="highlight-item"><span>🛏</span> 6 suites that feel like 5-star hotel rooms</div>
+      <div class="highlight-item"><span>🌊</span> 2 pools — including glass-bottom plunge + slide from master</div>
+      <div class="highlight-item"><span>🔊</span> Sonos in every room, Arc Ultra &amp; Era300 in master + cinema</div>
+      <div class="highlight-item"><span>🧊</span> Ice bath · 🔥 Sauna · 💦 Jacuzzi</div>
+      <div class="highlight-item"><span>💪</span> Private gym · 🧘‍♂️ Yoga-ready outdoor spaces</div>
+      <div class="highlight-item"><span>🍳</span> Full-time chef (guests just cover food costs)</div>
+      <div class="highlight-item"><span>🎉</span> Indoor-outdoor entertainment areas + swim-up bar</div>
+      <div class="highlight-item"><span>📸</span> Hyper-photogenic architecture + lighting throughout</div>
+    </div>
+  </section>
+</div>
 
-<div class="section-wide reveal">
-  <img src="/images/hero.jpg" alt="Villa Zeno Arete pool and villa" style="width:100%;object-fit:cover;max-height:70vh">
+<div class="card section-img">
+  <img src="/images/pool-lounge.jpg" alt="Villa Zeno Arete poolside lounge" style="width:100%;object-fit:cover;max-height:70vh">
 </div>
 
 <!-- SECTION 3 — GYM -->
-<section class="reveal">
-  <p class="section-label">The Gym</p>
-  <h2>Your Private Iron Temple</h2>
-  <p>No waiting. No distractions. No excuses. The Zeno Arete gym is a fully equipped private training space designed for those who don't take rest days lightly. Whether you're pushing heavy compound lifts, sharpening mobility, or keeping your routine locked in while traveling — this isn't a hotel "fitness corner." It's a proper gym, built for people who actually train.</p>
-  <p>Start your morning with sunrise reps, end your evening with a brutal finisher — then walk straight to recovery. Your body. Your schedule. Your standards.</p>
-</section>
+<div class="card">
+  <section class="reveal">
+    <p class="section-label">The Gym</p>
+    <h2>Your Private Iron Temple</h2>
+    <p>No waiting. No distractions. No excuses. The Zeno Arete gym is a fully equipped private training space designed for those who don't take rest days lightly. Whether you're pushing heavy compound lifts, sharpening mobility, or keeping your routine locked in while traveling — this isn't a hotel "fitness corner." It's a proper gym, built for people who actually train.</p>
+    <p>Start your morning with sunrise reps, end your evening with a brutal finisher — then walk straight to recovery. Your body. Your schedule. Your standards.</p>
+  </section>
+</div>
 
-<div class="section-wide reveal">
+<div class="card section-img">
   <img src="/images/gym.jpg" alt="Villa Zeno Arete private gym" style="width:100%;object-fit:cover;max-height:70vh">
 </div>
 
 <!-- SECTION 4 — RECOVERY -->
-<section class="reveal">
-  <p class="section-label">Ice Bath, Sauna &amp; Jacuzzi</p>
-  <h2>The Recovery Protocol</h2>
-  <p>Train hard. Recover harder. Zeno Arete's full recovery suite is built for those who understand that growth happens between sessions.</p>
-  <p>Plunge into the ice bath to crush inflammation and sharpen your mind. Sweat it out in the sauna to detox, destress, and reset. Then ease into the jacuzzi and let everything melt away.</p>
-  <p>This isn't spa-day fluff — it's a deliberate recovery protocol, steps from your bedroom, available whenever you want it. Cold. Heat. Release. Repeat.</p>
-</section>
+<div class="card-dark card">
+  <section class="reveal">
+    <p class="section-label">Ice Bath, Sauna &amp; Jacuzzi</p>
+    <h2>The Recovery Protocol</h2>
+    <p>Train hard. Recover harder. Zeno Arete's full recovery suite is built for those who understand that growth happens between sessions.</p>
+    <p>Plunge into the ice bath to crush inflammation and sharpen your mind. Sweat it out in the sauna to detox, destress, and reset. Then ease into the jacuzzi and let everything melt away.</p>
+    <p>This isn't spa-day fluff — it's a deliberate recovery protocol, steps from your bedroom, available whenever you want it. Cold. Heat. Release. Repeat.</p>
+  </section>
+</div>
 
-<div class="section-wide reveal">
+<div class="card section-img">
   <img src="/images/recovery.jpg" alt="Villa Zeno Arete ice bath and sauna" style="width:100%;object-fit:cover;max-height:70vh">
 </div>
 
 <!-- SECTION 5 — LIVE INTENTIONALLY -->
-<section class="reveal">
-  <p class="section-label">Live Intentionally</p>
-  <h2>Train, Recover, Repeat</h2>
-  <p>This isn't just a luxury villa — it's your private dojo, your content haven, your temple of play and purpose. Crush workouts in the private gym. Detox in the sauna. Host intimate dinners under the stars. Slide into the pool from your bedroom. Wake up every day feeling 1% more powerful.</p>
-</section>
+<div class="card">
+  <section class="reveal">
+    <p class="section-label">Live Intentionally</p>
+    <h2>Train, Recover, Repeat</h2>
+    <p>This isn't just a luxury villa — it's your private dojo, your content haven, your temple of play and purpose. Crush workouts in the private gym. Detox in the sauna. Host intimate dinners under the stars. Slide into the pool from your bedroom. Wake up every day feeling 1% more powerful.</p>
+  </section>
+</div>
 
-<div class="section-wide reveal">
+<div class="card section-img">
   <img src="/images/extra.jpg" alt="Villa Zeno Arete lifestyle" style="width:100%;object-fit:cover;max-height:70vh">
 </div>
 
-<!-- SECTION 6 — BOOK -->
-<section class="reveal" style="text-align:center">
-  <p class="section-label">Book the Villa</p>
-  <h2>Your Move</h2>
-  <p style="max-width:640px;margin:0 auto 2.5rem">Zeno Arete is available for private bookings, retreats, and content-focused getaways. Full-time staff, chef-prepared meals, and zero distractions. Just you, your crew, and the kind of energy that realigns everything. Contact the reservations team at Nusa Nova on the WhatsApp booking button and we'll get you settled in.</p>
-  <div class="cta-group">
-    <a href="https://www.airbnb.com/rooms/1409091642899578717?guests=1&adults=1&s=67&unique_share_id=bdc6c906-7419-49f1-8c45-10325513785a" target="_blank" class="btn">Book on Airbnb</a>
-    <a href="https://app-apac.thebookingbutton.com/properties/villazenoaretedirect" target="_blank" class="btn btn-fill">Book Direct</a>
+<!-- CARDS END — parallax shows through again for booking -->
+
+<!-- SECTION 6 — BOOK (parallax visible) -->
+<div class="book-section">
+  <div class="book-content reveal">
+    <p class="section-label">Book the Villa</p>
+    <h2>Your Move</h2>
+    <p style="max-width:640px;margin:0 auto 2.5rem">Zeno Arete is available for private bookings, retreats, and content-focused getaways. Full-time staff, chef-prepared meals, and zero distractions. Just you, your crew, and the kind of energy that realigns everything. Contact the reservations team at Nusa Nova on the WhatsApp booking button and we'll get you settled in.</p>
+    <div class="cta-group">
+      <a href="https://www.airbnb.com/rooms/1409091642899578717?guests=1&adults=1&s=67&unique_share_id=bdc6c906-7419-49f1-8c45-10325513785a" target="_blank" class="btn">Book on Airbnb</a>
+      <a href="https://app-apac.thebookingbutton.com/properties/villazenoaretedirect" target="_blank" class="btn btn-fill">Book Direct</a>
+    </div>
   </div>
-</section>
+</div>
 
 <!-- FOOTER -->
 <footer>
@@ -193,6 +228,11 @@ footer .copy{font-size:.75rem;color:#555}
   </div>
   <p class="copy">&copy; 2026 Zeno Arete · Managed by Nusa Nova Group</p>
 </footer>
+
+<!-- WhatsApp Floating Button -->
+<a href="https://wa.me/message/NUSANOVA" class="whatsapp-float" target="_blank" aria-label="Chat on WhatsApp">
+  <svg viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg"><path d="M16.004 0h-.008C7.174 0 0 7.176 0 16.004c0 3.502 1.14 6.746 3.072 9.382L1.062 31.29l6.166-1.98A15.913 15.913 0 0016.004 32C24.826 32 32 24.824 32 16.004 32 7.176 24.826 0 16.004 0zm9.31 22.612c-.39 1.1-2.294 2.1-3.162 2.178-.79.072-1.764.112-2.848-.18a25.928 25.928 0 01-2.58-.954c-4.542-1.96-7.508-6.554-7.738-6.858-.228-.306-1.87-2.49-1.87-4.748s1.184-3.37 1.604-3.83c.42-.456.918-.572 1.224-.572.306 0 .612.002.878.016.282.014.662-.106 1.036.79.39.932 1.322 3.218 1.438 3.45.114.232.19.504.038.808-.152.306-.228.496-.456.764-.228.266-.48.594-.686.798-.228.228-.466.474-.2.932.266.456 1.184 1.96 2.542 3.176 1.744 1.562 3.212 2.046 3.67 2.276.456.228.724.19.99-.114.266-.306 1.146-1.336 1.452-1.794.306-.456.612-.38 1.032-.228.42.152 2.668 1.258 3.124 1.488.456.228.764.342.878.534.114.19.114 1.1-.276 2.2z"/></svg>
+</a>
 
 <script>
 const obs=new IntersectionObserver((entries)=>{entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('visible');obs.unobserve(e.target)}})},{threshold:0.15});
