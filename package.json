@@ -1,0 +1,8 @@
+{
+  "name": "zenoarete-site",
+  "version": "1.0.0",
+  "scripts": {
+    "build": "echo 'Static site — no build needed'",
+    "start": "npx serve public -l 3000"
+  }
+}
