@@ -343,7 +343,17 @@ const observer = new IntersectionObserver((entries) => {
 
 document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
 
-// Hero image is fully fixed
+// Meta Pixel — track button clicks
+document.querySelectorAll('a').forEach(link => {
+  const href = link.href || '';
+  if (href.includes('thebookingbutton.com')) {
+    link.addEventListener('click', () => fbq('track', 'InitiateCheckout', {content_name: 'Book Direct'}));
+  } else if (href.includes('airbnb.com')) {
+    link.addEventListener('click', () => fbq('track', 'Lead', {content_name: 'Book on Airbnb'}));
+  } else if (href.includes('wa.me')) {
+    link.addEventListener('click', () => fbq('trackCustom', 'WhatsAppClick'));
+  }
+});
 </script>
 <!-- Vercel Analytics -->
 <script defer src="/_vercel/insights/script.js"></script>
