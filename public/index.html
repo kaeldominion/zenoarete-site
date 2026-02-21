@@ -84,9 +84,9 @@ a{color:var(--accent);text-decoration:none}
 .btn-fill{background:var(--accent);color:#0a0a0a}
 .btn-fill:hover{background:#d4b478;box-shadow:0 8px 30px rgba(201,169,110,.35)}
 
-/* ── Card sections — solid, opaque ── */
-.card{background:var(--bg);position:relative;z-index:1}
-.card-alt{background:var(--bg2)}
+/* ── Card sections — frosted glass over fixed bg ── */
+.card{background:rgba(10,10,10,.78);backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px);position:relative;z-index:1}
+.card-alt{background:rgba(15,15,15,.78);backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px)}
 
 /* ── Text sections — centered like Carrd ── */
 .text-section{padding:7rem 2rem;max-width:720px;margin:0 auto;text-align:center}
@@ -103,14 +103,14 @@ p{margin-bottom:1.4rem;color:var(--muted);font-size:.95rem}
 .img-section:hover img{transform:scale(1.03)}
 
 /* ── Alternating split sections (image + text side by side) ── */
-.split-section{display:grid;grid-template-columns:1fr 1fr;min-height:70vh;position:relative;z-index:1}
+.split-section{display:grid;grid-template-columns:1fr 1fr;min-height:70vh;position:relative;z-index:1;background:transparent}
 .split-section.reverse .split-img{order:2}
 .split-section.reverse .split-text{order:1}
 .split-img{overflow:hidden;position:relative}
 .split-img img{width:100%;height:100%;object-fit:cover;transition:transform 8s ease}
 .split-img:hover img{transform:scale(1.03)}
-.split-text{display:flex;flex-direction:column;justify-content:center;padding:5rem 4rem;background:var(--bg)}
-.split-text.alt-bg{background:var(--bg2)}
+.split-text{display:flex;flex-direction:column;justify-content:center;padding:5rem 4rem;background:rgba(10,10,10,.78);backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px)}
+.split-text.alt-bg{background:rgba(15,15,15,.78)}
 .highlights-list p{margin-bottom:.6rem;color:var(--text);font-size:.9rem}
 .split-text .section-label{text-align:left}
 .split-text h2{text-align:left}
@@ -127,11 +127,11 @@ p{margin-bottom:1.4rem;color:var(--muted);font-size:.95rem}
 
 /* ── Bottom booking — parallax shows through ── */
 .book-section{position:relative;z-index:1;padding:6rem 2rem;text-align:center}
-.book-section::before{content:'';position:absolute;inset:0;background:linear-gradient(180deg,rgba(10,10,10,.7) 0%,rgba(10,10,10,.45) 30%,rgba(10,10,10,.45) 70%,rgba(10,10,10,.8) 100%);z-index:0}
+.book-section::before{content:'';position:absolute;inset:0;background:rgba(10,10,10,.55);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);z-index:0}
 .book-section .book-content{position:relative;z-index:1;max-width:700px;margin:0 auto}
 
 /* ── Footer ── */
-footer{background:var(--bg);position:relative;z-index:1;border-top:1px solid rgba(255,255,255,.06);padding:3rem 2rem;text-align:center}
+footer{background:rgba(10,10,10,.85);backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px);position:relative;z-index:1;border-top:1px solid rgba(255,255,255,.06);padding:3rem 2rem;text-align:center}
 footer .links{display:flex;gap:2.5rem;justify-content:center;margin-bottom:1rem;flex-wrap:wrap}
 footer .links a{font-size:.75rem;letter-spacing:.2em;text-transform:uppercase;color:var(--muted);transition:color .4s}
 footer .links a:hover{color:var(--accent)}
@@ -285,7 +285,7 @@ footer .copy{font-size:.7rem;color:#444}
 <!-- ════════════════════════════════════════ -->
 <!-- BOOKING — parallax shows through -->
 <!-- ════════════════════════════════════════ -->
-<div class="book-section" style="background:url('/images/hero.jpg') center/cover no-repeat fixed">
+<div class="book-section">
   <div class="book-content">
     <span class="section-label reveal reveal-fade">Book the Villa</span>
     <h2 class="reveal">Your Move</h2>
@@ -328,19 +328,7 @@ const observer = new IntersectionObserver((entries) => {
 
 document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
 
-// Smooth parallax speed adjustment on scroll (subtle)
-let ticking = false;
-window.addEventListener('scroll', () => {
-  if (!ticking) {
-    requestAnimationFrame(() => {
-      const scrolled = window.pageYOffset;
-      const bg = document.querySelector('.parallax-bg');
-      if (bg) bg.style.transform = `translateY(${scrolled * -0.15}px)`;
-      ticking = false;
-    });
-    ticking = true;
-  }
-});
+// Hero image is fully fixed — no parallax translation needed
 </script>
 <!-- Vercel Analytics -->
 <script defer src="/_vercel/insights/script.js"></script>
