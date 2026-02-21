@@ -110,6 +110,7 @@ p{margin-bottom:1.4rem;color:var(--muted);font-size:.95rem}
 .split-img:hover img{transform:scale(1.03)}
 .split-text{display:flex;flex-direction:column;justify-content:center;padding:5rem 4rem;background:var(--bg)}
 .split-text.alt-bg{background:var(--bg2)}
+.highlights-list p{margin-bottom:.6rem;color:var(--text);font-size:.9rem}
 .split-text .section-label{text-align:left}
 .split-text h2{text-align:left}
 .split-text blockquote{text-align:left}
@@ -204,29 +205,30 @@ footer .copy{font-size:.7rem;color:#444}
 </div>
 
 <!-- Highlights -->
-<div class="card-alt card">
-  <div class="highlights-wrap">
+<!-- Highlights — image right, text left -->
+<div class="split-section reverse">
+  <div class="split-img">
+    <img src="/images/pool-lounge.jpg" alt="Villa Zeno Arete poolside lounge" class="reveal reveal-scale">
+  </div>
+  <div class="split-text alt-bg">
     <span class="section-label reveal reveal-fade">The Highlights</span>
     <h2 class="reveal">Crafted for Peak Living</h2>
-    <div class="highlights stagger">
-      <div class="highlight-item reveal"><span>🛏</span><p>6 suites that feel like 5-star hotel rooms</p></div>
-      <div class="highlight-item reveal"><span>🌊</span><p>2 pools — including glass-bottom plunge + slide from master</p></div>
-      <div class="highlight-item reveal"><span>🔊</span><p>Sonos in every room, Arc Ultra &amp; Era300 in master + cinema</p></div>
-      <div class="highlight-item reveal"><span>🧊</span><p>Ice bath · 🔥 Sauna · 💦 Jacuzzi</p></div>
-      <div class="highlight-item reveal"><span>💪</span><p>Private gym · 🧘‍♂️ Yoga-ready outdoor spaces</p></div>
-      <div class="highlight-item reveal"><span>🍳</span><p>Full-time chef (guests just cover food costs)</p></div>
-      <div class="highlight-item reveal"><span>🎉</span><p>Indoor-outdoor entertainment areas + swim-up bar</p></div>
-      <div class="highlight-item reveal"><span>📸</span><p>Hyper-photogenic architecture + lighting throughout</p></div>
+    <div class="divider reveal reveal-fade" style="margin-left:0"></div>
+    <div class="highlights-list stagger">
+      <p class="reveal">🛏 6 suites that feel like 5-star hotel rooms</p>
+      <p class="reveal">🌊 2 pools — including glass-bottom plunge + slide from master</p>
+      <p class="reveal">🔊 Sonos in every room, Arc Ultra &amp; Era300 in master + cinema</p>
+      <p class="reveal">🧊 Ice bath · 🔥 Sauna · 💦 Jacuzzi</p>
+      <p class="reveal">💪 Private gym · 🧘‍♂️ Yoga-ready outdoor spaces</p>
+      <p class="reveal">🍳 Full-time chef (guests just cover food costs)</p>
+      <p class="reveal">🎉 Indoor-outdoor entertainment areas + swim-up bar</p>
+      <p class="reveal">📸 Hyper-photogenic architecture + lighting throughout</p>
     </div>
   </div>
 </div>
 
-<div class="img-section card">
-  <img src="/images/pool-lounge.jpg" alt="Villa Zeno Arete poolside lounge" class="reveal reveal-scale">
-</div>
-
-<!-- Gym — image right, text left -->
-<div class="split-section reverse">
+<!-- Gym — image left, text right -->
+<div class="split-section">
   <div class="split-img">
     <img src="/images/gym.jpg" alt="Villa Zeno Arete private gym" class="reveal reveal-scale">
   </div>
@@ -239,8 +241,8 @@ footer .copy{font-size:.7rem;color:#444}
   </div>
 </div>
 
-<!-- Recovery — image left, text right -->
-<div class="split-section">
+<!-- Recovery — image right, text left -->
+<div class="split-section reverse">
   <div class="split-img">
     <img src="/images/recovery.jpg" alt="Villa Zeno Arete ice bath and sauna" class="reveal reveal-scale">
   </div>
@@ -254,8 +256,8 @@ footer .copy{font-size:.7rem;color:#444}
   </div>
 </div>
 
-<!-- Live Intentionally — image right, text left -->
-<div class="split-section reverse">
+<!-- Live Intentionally — image left, text right -->
+<div class="split-section">
   <div class="split-img">
     <img src="/images/extra.jpg" alt="Villa Zeno Arete lifestyle" class="reveal reveal-scale">
   </div>
