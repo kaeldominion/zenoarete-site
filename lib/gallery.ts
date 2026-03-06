@@ -12,6 +12,9 @@ export interface GalleryItem {
 
 const DATA_DIR = path.join(process.cwd(), "data");
 const GALLERY_FILE = path.join(DATA_DIR, "gallery.json");
+// On Vercel, /tmp is writable but ephemeral. We use data/gallery.json as source of truth (committed to repo).
+// Runtime writes go to /tmp and are lost on cold starts.
+const RUNTIME_FILE = process.env.VERCEL ? path.join("/tmp", "gallery.json") : GALLERY_FILE;
 const THUMBS_DIR = path.join(process.cwd(), "public", "images", "gallery", "thumbs");
 
 export function ensureGalleryData(): GalleryItem[] {
@@ -19,6 +22,11 @@ export function ensureGalleryData(): GalleryItem[] {
     fs.mkdirSync(DATA_DIR, { recursive: true });
   }
 
+  // Check runtime file first (has admin edits), then committed file
+  if (process.env.VERCEL && fs.existsSync(RUNTIME_FILE)) {
+    const raw = fs.readFileSync(RUNTIME_FILE, "utf-8");
+    return JSON.parse(raw) as GalleryItem[];
+  }
   if (fs.existsSync(GALLERY_FILE)) {
     const raw = fs.readFileSync(GALLERY_FILE, "utf-8");
     return JSON.parse(raw) as GalleryItem[];
@@ -43,10 +51,12 @@ export function ensureGalleryData(): GalleryItem[] {
 }
 
 export function saveGalleryData(data: GalleryItem[]): void {
-  if (!fs.existsSync(DATA_DIR)) {
-    fs.mkdirSync(DATA_DIR, { recursive: true });
+  const targetFile = process.env.VERCEL ? RUNTIME_FILE : GALLERY_FILE;
+  const targetDir = path.dirname(targetFile);
+  if (!fs.existsSync(targetDir)) {
+    fs.mkdirSync(targetDir, { recursive: true });
   }
-  fs.writeFileSync(GALLERY_FILE, JSON.stringify(data, null, 2));
+  fs.writeFileSync(targetFile, JSON.stringify(data, null, 2));
 }
 
 export function getCategories(data: GalleryItem[]): string[] {
