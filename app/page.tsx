@@ -36,9 +36,6 @@ export default function Home() {
             <Link href="/gallery" className="btn">
               View Gallery
             </Link>
-            <a href="#philosophy" className="btn">
-              See the Villa
-            </a>
             <a
               href="https://www.airbnb.com/rooms/1409091642899578717?guests=1&adults=1&s=67&unique_share_id=bdc6c906-7419-49f1-8c45-10325513785a"
               target="_blank"
