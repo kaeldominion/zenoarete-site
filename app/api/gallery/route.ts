@@ -12,12 +12,44 @@ export async function GET() {
   return NextResponse.json({ photos: visible, admin: false });
 }
 
-export async function PUT(req: NextRequest) {
+export async function POST(req: NextRequest) {
   const isAdmin = await verifySession();
   if (!isAdmin) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }
-  const { photos } = (await req.json()) as { photos: GalleryItem[] };
-  saveGalleryData(photos);
-  return NextResponse.json({ ok: true });
+  const body = await req.json();
+  
+  // Support both full replace and single-photo update
+  if (body.photos) {
+    saveGalleryData(body.photos as GalleryItem[]);
+    return NextResponse.json({ ok: true });
+  }
+  
+  if (body.update) {
+    const data = ensureGalleryData();
+    const idx = data.findIndex((p) => p.id === body.update.id);
+    if (idx === -1) return NextResponse.json({ error: "Not found" }, { status: 404 });
+    data[idx] = { ...data[idx], ...body.update };
+    saveGalleryData(data);
+    return NextResponse.json({ ok: true, photo: data[idx] });
+  }
+
+  if (body.reorder) {
+    const data = ensureGalleryData();
+    const { id, direction } = body.reorder;
+    const idx = data.findIndex((p) => p.id === id);
+    if (idx === -1) return NextResponse.json({ error: "Not found" }, { status: 404 });
+    const swapIdx = direction === "up" ? idx - 1 : idx + 1;
+    if (swapIdx < 0 || swapIdx >= data.length) return NextResponse.json({ ok: true });
+    // Swap orders
+    const tmpOrder = data[idx].order;
+    data[idx].order = data[swapIdx].order;
+    data[swapIdx].order = tmpOrder;
+    // Swap positions in array
+    [data[idx], data[swapIdx]] = [data[swapIdx], data[idx]];
+    saveGalleryData(data);
+    return NextResponse.json({ ok: true });
+  }
+
+  return NextResponse.json({ error: "Invalid request" }, { status: 400 });
 }

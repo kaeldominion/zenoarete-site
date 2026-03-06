@@ -1,16 +1,29 @@
 "use client";
-import { useEffect, useState, useCallback } from "react";
-import Link from "next/link";
+import { useEffect, useState, useCallback, useRef } from "react";
 import "./gallery.css";
 
 interface Photo {
+  id: string;
   filename: string;
-  title: string;
-  description: string;
+  thumb: string;
+  full: string;
   category: string;
+  description: string;
   visible: boolean;
   order: number;
 }
+
+const CATEGORIES = [
+  { key: "all", label: "All" },
+  { key: "exterior", label: "Exterior" },
+  { key: "pool", label: "Pool & Outdoor" },
+  { key: "living", label: "Living Spaces" },
+  { key: "bedroom", label: "Bedrooms" },
+  { key: "bathroom", label: "Bathrooms" },
+  { key: "dining", label: "Dining & Kitchen" },
+  { key: "wellness", label: "Wellness & Gym" },
+  { key: "views", label: "Views & Surroundings" },
+];
 
 export default function GalleryClient() {
   const [photos, setPhotos] = useState<Photo[]>([]);
@@ -18,8 +31,11 @@ export default function GalleryClient() {
   const [loading, setLoading] = useState(true);
   const [activeFilter, setActiveFilter] = useState("all");
   const [lightboxIndex, setLightboxIndex] = useState<number | null>(null);
+  const [lightboxLoaded, setLightboxLoaded] = useState(false);
   const [editingPhoto, setEditingPhoto] = useState<Photo | null>(null);
-  const [categories, setCategories] = useState<string[]>([]);
+  const gridRef = useRef<HTMLDivElement>(null);
+  const touchStartX = useRef(0);
+  const touchStartY = useRef(0);
 
   useEffect(() => {
     fetch("/api/gallery")
@@ -27,298 +43,368 @@ export default function GalleryClient() {
       .then((data) => {
         setPhotos(data.photos);
         setIsAdmin(data.admin);
-        const cats = Array.from(new Set(data.photos.map((p: Photo) => p.category))) as string[];
-        setCategories(cats.filter((c) => c !== "uncategorized").sort());
         setLoading(false);
       });
   }, []);
 
+  // IntersectionObserver for fade-in
+  useEffect(() => {
+    if (loading) return;
+    const obs = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            setTimeout(
+              () => entry.target.classList.add("visible"),
+              Math.random() * 150
+            );
+            obs.unobserve(entry.target);
+          }
+        });
+      },
+      { threshold: 0.05, rootMargin: "100px" }
+    );
+    gridRef.current?.querySelectorAll(".gallery-item").forEach((el) => obs.observe(el));
+    return () => obs.disconnect();
+  }, [loading, activeFilter, photos]);
+
   const filtered =
     activeFilter === "all"
       ? photos.filter((p) => p.visible || isAdmin)
-      : photos.filter(
-          (p) => p.category === activeFilter && (p.visible || isAdmin)
-        );
+      : photos.filter((p) => p.category === activeFilter && (p.visible || isAdmin));
 
-  const openLightbox = (i: number) => setLightboxIndex(i);
+  // Lightbox
+  const openLightbox = (i: number) => {
+    setLightboxLoaded(false);
+    setLightboxIndex(i);
+  };
   const closeLightbox = () => setLightboxIndex(null);
 
-  const navLightbox = useCallback(
+  const navigate = useCallback(
     (dir: number) => {
       if (lightboxIndex === null) return;
-      const next = lightboxIndex + dir;
-      if (next >= 0 && next < filtered.length) setLightboxIndex(next);
+      const next = (lightboxIndex + dir + filtered.length) % filtered.length;
+      setLightboxLoaded(false);
+      setLightboxIndex(next);
     },
     [lightboxIndex, filtered.length]
   );
 
+  // Keyboard nav
   useEffect(() => {
     const handler = (e: KeyboardEvent) => {
       if (lightboxIndex === null) return;
       if (e.key === "Escape") closeLightbox();
-      if (e.key === "ArrowLeft") navLightbox(-1);
-      if (e.key === "ArrowRight") navLightbox(1);
+      if (e.key === "ArrowLeft") navigate(-1);
+      if (e.key === "ArrowRight") navigate(1);
     };
-    window.addEventListener("keydown", handler);
-    return () => window.removeEventListener("keydown", handler);
-  }, [lightboxIndex, navLightbox]);
+    document.addEventListener("keydown", handler);
+    return () => document.removeEventListener("keydown", handler);
+  }, [lightboxIndex, navigate]);
 
-  const saveEdit = async (photo: Photo) => {
-    const updated = photos.map((p) =>
-      p.filename === photo.filename ? photo : p
-    );
-    setPhotos(updated);
-    setEditingPhoto(null);
-    await fetch("/api/gallery", {
-      method: "PUT",
+  // Admin: save photo edit
+  const saveEdit = async (updated: Photo) => {
+    const res = await fetch("/api/gallery", {
+      method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ photos: updated }),
+      body: JSON.stringify({ update: updated }),
     });
+    if (res.ok) {
+      setPhotos((prev) => prev.map((p) => (p.id === updated.id ? updated : p)));
+      setEditingPhoto(null);
+    }
   };
 
-  if (loading) {
-    return (
-      <div className="gallery-page">
-        <div className="gallery-loading">Loading gallery...</div>
-      </div>
-    );
-  }
+  // Admin: reorder
+  const reorder = async (id: string, direction: "up" | "down") => {
+    const res = await fetch("/api/gallery", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ reorder: { id, direction } }),
+    });
+    if (res.ok) {
+      // Refetch
+      const data = await fetch("/api/gallery").then((r) => r.json());
+      setPhotos(data.photos);
+    }
+  };
+
+  const currentPhoto = lightboxIndex !== null ? filtered[lightboxIndex] : null;
 
   return (
-    <div className="gallery-page">
-      {/* Nav */}
-      <nav className="gallery-nav">
-        <Link href="/" className="gallery-nav-logo">
-          Zeno Arete
-        </Link>
-        <div style={{ display: "flex", gap: "1.5rem", alignItems: "center" }}>
-          {isAdmin && (
-            <Link href="/admin/gallery" style={{ color: "var(--accent)" }}>
-              Admin
-            </Link>
-          )}
-          <Link href="/">Home</Link>
-        </div>
-      </nav>
+    <div style={{ background: "#0a0a0a", minHeight: "100vh" }}>
+      {/* Hero */}
+      <section className="gallery-hero">
+        <span className="section-label">Explore Every Corner</span>
+        <h1>The Gallery</h1>
+        <div className="gallery-divider" />
+        <p>
+          Over 200 photos capturing the essence of Villa Zeno Arete — from
+          sunrise poolside mornings to the intimate details of each suite.
+        </p>
+      </section>
 
-      {/* Header */}
-      <div className="gallery-header">
-        <span className="section-label">The Villa</span>
-        <h1>Gallery</h1>
-        <p>Explore every corner of Villa Zeno Arete</p>
+      {/* Filters */}
+      <div className="gallery-filters">
+        {CATEGORIES.map((cat) => (
+          <button
+            key={cat.key}
+            className={`gallery-filter-btn${activeFilter === cat.key ? " active" : ""}`}
+            onClick={() => setActiveFilter(cat.key)}
+          >
+            {cat.label}
+          </button>
+        ))}
       </div>
 
-      {/* Filter Tabs */}
-      {categories.length > 0 && (
-        <div className="filter-tabs">
-          <button
-            className={`filter-tab ${activeFilter === "all" ? "active" : ""}`}
-            onClick={() => setActiveFilter("all")}
-          >
-            All
-          </button>
-          {categories.map((cat) => (
-            <button
-              key={cat}
-              className={`filter-tab ${activeFilter === cat ? "active" : ""}`}
-              onClick={() => setActiveFilter(cat)}
-            >
-              {cat}
-            </button>
-          ))}
-          {photos.some((p) => p.category === "uncategorized") && (
-            <button
-              className={`filter-tab ${activeFilter === "uncategorized" ? "active" : ""}`}
-              onClick={() => setActiveFilter("uncategorized")}
-            >
-              Uncategorized
-            </button>
-          )}
-        </div>
-      )}
-
       {/* Grid */}
-      <div className="gallery-grid">
+      <div className="gallery-grid" ref={gridRef}>
         {filtered.map((photo, i) => (
           <div
-            key={photo.filename}
-            className="gallery-item"
-            style={{
-              animationDelay: `${Math.min(i * 0.05, 1)}s`,
-              opacity: !photo.visible ? 0.4 : undefined,
-            }}
+            key={photo.id}
+            className={`gallery-item loading${!photo.visible ? " hidden-photo" : ""}`}
             onClick={() => openLightbox(i)}
           >
+            {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
-              src={`/images/gallery/thumbs/${photo.filename}`}
-              alt={photo.title || photo.filename}
+              src={photo.thumb}
+              alt={`Villa Zeno Arete - ${photo.category}`}
               loading="lazy"
+              onLoad={(e) => {
+                (e.target as HTMLElement).closest(".gallery-item")?.classList.remove("loading");
+              }}
+              onError={(e) => {
+                (e.target as HTMLElement).closest(".gallery-item")?.remove();
+              }}
             />
-            <div className="gallery-item-overlay">
-              <div>
-                {photo.title && <h3>{photo.title}</h3>}
-                {photo.description && <p>{photo.description}</p>}
-                {!photo.visible && (
-                  <p style={{ color: "var(--accent)", fontSize: "0.7rem" }}>
-                    Hidden
-                  </p>
-                )}
-              </div>
-            </div>
+            {photo.description && (
+              <div className="gallery-item-desc">{photo.description}</div>
+            )}
             {isAdmin && (
-              <button
-                className="gallery-item-edit"
-                onClick={(e) => {
-                  e.stopPropagation();
-                  setEditingPhoto({ ...photo });
-                }}
-                title="Edit photo"
-              >
-                ✏️
-              </button>
+              <>
+                <button
+                  className="gallery-item-edit"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    setEditingPhoto({ ...photo });
+                  }}
+                  title="Edit photo"
+                >
+                  ✎
+                </button>
+                <div className="gallery-item-reorder">
+                  <button
+                    className="gallery-reorder-btn"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      reorder(photo.id, "up");
+                    }}
+                    title="Move up"
+                  >
+                    ↑
+                  </button>
+                  <button
+                    className="gallery-reorder-btn"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      reorder(photo.id, "down");
+                    }}
+                    title="Move down"
+                  >
+                    ↓
+                  </button>
+                </div>
+              </>
             )}
           </div>
         ))}
       </div>
 
+      {/* Admin indicator */}
+      {isAdmin && <div className="admin-indicator">Admin Mode</div>}
+
       {/* Lightbox */}
-      {lightboxIndex !== null && filtered[lightboxIndex] && (
-        <div className="lightbox" onClick={closeLightbox}>
-          <button className="lightbox-close" onClick={closeLightbox}>
-            ×
-          </button>
-          {lightboxIndex > 0 && (
-            <button
-              className="lightbox-nav lightbox-prev"
-              onClick={(e) => {
-                e.stopPropagation();
-                navLightbox(-1);
-              }}
-            >
-              ‹
-            </button>
-          )}
-          {lightboxIndex < filtered.length - 1 && (
-            <button
-              className="lightbox-nav lightbox-next"
-              onClick={(e) => {
-                e.stopPropagation();
-                navLightbox(1);
-              }}
-            >
-              ›
-            </button>
-          )}
-          <div className="lightbox-content" onClick={(e) => e.stopPropagation()}>
+      <div
+        className={`gallery-lightbox${lightboxIndex !== null ? " open" : ""}`}
+        onClick={(e) => {
+          if (e.target === e.currentTarget) closeLightbox();
+        }}
+        onTouchStart={(e) => {
+          touchStartX.current = e.touches[0].clientX;
+          touchStartY.current = e.touches[0].clientY;
+        }}
+        onTouchEnd={(e) => {
+          const dx = e.changedTouches[0].clientX - touchStartX.current;
+          const dy = e.changedTouches[0].clientY - touchStartY.current;
+          if (Math.abs(dx) > Math.abs(dy) && Math.abs(dx) > 50) {
+            navigate(dx > 0 ? -1 : 1);
+          }
+        }}
+      >
+        <button className="gallery-lightbox-close" onClick={closeLightbox} aria-label="Close">
+          ✕
+        </button>
+        <button
+          className="gallery-lightbox-arrow gallery-lightbox-prev"
+          onClick={() => navigate(-1)}
+          aria-label="Previous"
+        >
+          ‹
+        </button>
+        <button
+          className="gallery-lightbox-arrow gallery-lightbox-next"
+          onClick={() => navigate(1)}
+          aria-label="Next"
+        >
+          ›
+        </button>
+        <div className="gallery-lightbox-img-wrap">
+          {currentPhoto && (
+            /* eslint-disable-next-line @next/next/no-img-element */
             <img
-              src={`/images/gallery/full/${filtered[lightboxIndex].filename}`}
-              alt={filtered[lightboxIndex].title || filtered[lightboxIndex].filename}
+              src={currentPhoto.full}
+              alt={`Villa Zeno Arete - ${currentPhoto.category}`}
+              className={lightboxLoaded ? "loaded" : ""}
+              onLoad={() => setLightboxLoaded(true)}
+              onError={(e) => {
+                // Fallback to thumb
+                (e.target as HTMLImageElement).src = currentPhoto.thumb;
+              }}
             />
-            <div className="lightbox-info">
-              {filtered[lightboxIndex].title && (
-                <h3>{filtered[lightboxIndex].title}</h3>
-              )}
-              {filtered[lightboxIndex].description && (
-                <p>{filtered[lightboxIndex].description}</p>
-              )}
-            </div>
-          </div>
+          )}
         </div>
-      )}
+        <div className="gallery-lightbox-counter">
+          {lightboxIndex !== null
+            ? `${lightboxIndex + 1} / ${filtered.length}`
+            : ""}
+        </div>
+      </div>
 
       {/* Edit Modal */}
       {editingPhoto && (
         <EditModal
           photo={editingPhoto}
-          categories={categories}
           onSave={saveEdit}
-          onClose={() => setEditingPhoto(null)}
+          onCancel={() => setEditingPhoto(null)}
         />
       )}
 
       {/* Footer */}
-      <footer style={{ marginTop: "2rem" }}>
-        <div className="links">
-          <Link href="/">Home</Link>
-          <a href="https://instagram.com/villazenoarete" target="_blank">
+      <footer className="gallery-footer">
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img
+          src="/images/icon.png"
+          alt="Zeno Arete emblem"
+          style={{
+            width: 60,
+            height: 60,
+            borderRadius: "50%",
+            margin: "0 auto 1.5rem",
+            display: "block",
+            opacity: 0.8,
+          }}
+        />
+        <div className="gallery-footer-links">
+          <a href="/">Home</a>
+          <a href="https://instagram.com/villazenoarete" target="_blank" rel="noopener">
             Instagram
           </a>
-          <a href="https://wa.me/628113807533" target="_blank">
-            WhatsApp
+          <a
+            href="https://www.airbnb.com/rooms/1409091642899578717"
+            target="_blank"
+            rel="noopener"
+          >
+            Airbnb
           </a>
+          <a href="mailto:reservations@nusanova.com">Email</a>
         </div>
-        <p className="copy">
+        <p className="gallery-footer-copy">
           &copy; 2026 Zeno Arete · Managed by Nusa Nova Group
         </p>
       </footer>
+
+      {/* WhatsApp */}
+      <a
+        href="https://wa.me/628113807533"
+        className="gallery-whatsapp"
+        target="_blank"
+        rel="noopener"
+        aria-label="Chat on WhatsApp"
+      >
+        <svg viewBox="0 0 32 32">
+          <path d="M16.004 0h-.008C7.174 0 0 7.176 0 16.004c0 3.502 1.14 6.746 3.072 9.382L1.062 31.29l6.166-1.98A15.913 15.913 0 0016.004 32C24.826 32 32 24.824 32 16.004 32 7.176 24.826 0 16.004 0zm9.31 22.612c-.39 1.1-2.294 2.1-3.162 2.178-.79.072-1.764.112-2.848-.18a25.928 25.928 0 01-2.58-.954c-4.542-1.96-7.508-6.554-7.738-6.858-.228-.306-1.87-2.49-1.87-4.748s1.184-3.37 1.604-3.83c.42-.456.918-.572 1.224-.572.306 0 .612.002.878.016.282.014.662-.106 1.036.79.39.932 1.322 3.218 1.438 3.45.114.232.19.504.038.808-.152.306-.228.496-.456.764-.228.266-.48.594-.686.798-.228.228-.466.474-.2.932.266.456 1.184 1.96 2.542 3.176 1.744 1.562 3.212 2.046 3.67 2.276.456.228.724.19.99-.114.266-.306 1.146-1.336 1.452-1.794.306-.456.612-.38 1.032-.228.42.152 2.668 1.258 3.124 1.488.456.228.764.342.878.534.114.19.114 1.1-.276 2.2z" />
+        </svg>
+      </a>
     </div>
   );
 }
 
+/* ── Edit Modal Component ── */
 function EditModal({
   photo,
-  categories,
   onSave,
-  onClose,
+  onCancel,
 }: {
   photo: Photo;
-  categories: string[];
   onSave: (p: Photo) => void;
-  onClose: () => void;
+  onCancel: () => void;
 }) {
   const [form, setForm] = useState(photo);
+  const [saving, setSaving] = useState(false);
 
   return (
-    <div className="edit-modal" onClick={onClose}>
-      <div className="edit-modal-content" onClick={(e) => e.stopPropagation()}>
+    <div className="gallery-edit-overlay" onClick={(e) => e.target === e.currentTarget && onCancel()}>
+      <div className="gallery-edit-modal">
         <h3>Edit Photo</h3>
-        <div className="edit-field">
-          <label>Title</label>
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img
+          src={photo.thumb}
+          alt=""
+          style={{ width: "100%", borderRadius: 6, marginBottom: "1rem", maxHeight: 200, objectFit: "cover" }}
+        />
+        <label>Category</label>
+        <select
+          value={form.category}
+          onChange={(e) => setForm({ ...form, category: e.target.value })}
+        >
+          {CATEGORIES.filter((c) => c.key !== "all").map((c) => (
+            <option key={c.key} value={c.key}>
+              {c.label}
+            </option>
+          ))}
+        </select>
+
+        <label>Description</label>
+        <textarea
+          value={form.description}
+          onChange={(e) => setForm({ ...form, description: e.target.value })}
+          placeholder="Optional description shown on hover..."
+        />
+
+        <div className="gallery-edit-visibility">
           <input
-            value={form.title}
-            onChange={(e) => setForm({ ...form, title: e.target.value })}
-            placeholder="Photo title"
+            type="checkbox"
+            checked={form.visible}
+            onChange={(e) => setForm({ ...form, visible: e.target.checked })}
+            id="visibility-check"
           />
+          <span>Visible to public</span>
         </div>
-        <div className="edit-field">
-          <label>Description</label>
-          <textarea
-            value={form.description}
-            onChange={(e) => setForm({ ...form, description: e.target.value })}
-            placeholder="Photo description"
-          />
-        </div>
-        <div className="edit-field">
-          <label>Category</label>
-          <select
-            value={form.category}
-            onChange={(e) => setForm({ ...form, category: e.target.value })}
-          >
-            <option value="uncategorized">Uncategorized</option>
-            {categories.map((c) => (
-              <option key={c} value={c}>
-                {c}
-              </option>
-            ))}
-          </select>
-        </div>
-        <div className="edit-field">
-          <label>
-            <input
-              type="checkbox"
-              checked={form.visible}
-              onChange={(e) => setForm({ ...form, visible: e.target.checked })}
-              style={{ width: "auto", marginRight: "0.5rem" }}
-            />
-            Visible
-          </label>
-        </div>
-        <div className="edit-actions">
-          <button className="btn" onClick={onClose}>
+
+        <div className="gallery-edit-actions">
+          <button className="gallery-edit-cancel" onClick={onCancel}>
             Cancel
           </button>
-          <button className="btn btn-fill" onClick={() => onSave(form)}>
-            Save
+          <button
+            className="gallery-edit-save"
+            disabled={saving}
+            onClick={async () => {
+              setSaving(true);
+              await onSave(form);
+              setSaving(false);
+            }}
+          >
+            {saving ? "Saving..." : "Save"}
           </button>
         </div>
       </div>
