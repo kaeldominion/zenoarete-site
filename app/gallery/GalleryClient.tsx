@@ -133,6 +133,20 @@ export default function GalleryClient() {
 
   return (
     <div style={{ background: "#0a0a0a", minHeight: "100vh" }}>
+      {/* Nav */}
+      <nav className="gallery-nav">
+        <a href="/" className="gallery-nav-logo">
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img src="/images/icon.png" alt="Zeno Arete" />
+          <span>Zeno Arete</span>
+        </a>
+        <div className="gallery-nav-links">
+          <a href="/">Home</a>
+          <a href="/gallery" className="active">Gallery</a>
+          <a href="https://app-apac.thebookingbutton.com/properties/villazenoaretedirect" target="_blank" rel="noopener" className="btn btn-fill">Book Now</a>
+        </div>
+      </nav>
+
       {/* Hero */}
       <section className="gallery-hero">
         <span className="section-label">Explore Every Corner</span>
