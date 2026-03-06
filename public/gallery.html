@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Gallery — Zeno Arete | Private Luxury Villa in Bali</title>
+<meta name="description" content="Explore Villa Zeno Arete through our photo gallery — 6 ultra-luxe suites, 2 pools, ice bath, sauna, gym, and stunning Bali surroundings.">
+<meta property="og:title" content="Gallery — Zeno Arete">
+<meta property="og:description" content="Explore every corner of this private luxury villa in Pererenan, Bali.">
+<meta property="og:type" content="website">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="shortcut icon" href="/favicon.ico">
+
+<!-- Meta Pixel Code -->
+<script>
+!function(f,b,e,v,n,t,s)
+{if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+n.queue=[];t=b.createElement(e);t.async=!0;
+t.src=v;s=b.getElementsByTagName(e)[0];
+s.parentNode.insertBefore(t,s)}(window, document,'script',
+'https://connect.facebook.net/en_US/fbevents.js');
+fbq('init', '2092098044968379');
+fbq('track', 'PageView');
+</script>
+<noscript><img height="1" width="1" style="display:none" src="https://www.facebook.com/tr?id=2092098044968379&ev=PageView&noscript=1"/></noscript>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+:root{--bg:#0a0a0a;--bg2:#0f0f0f;--text:#e8e4de;--muted:#9a9590;--accent:#c9a96e;--font-body:'Inter',sans-serif;--font-display:'Playfair Display',serif}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--text);font-family:var(--font-body);font-weight:300;line-height:1.8;overflow-x:hidden}
+img{max-width:100%;display:block}
+a{color:var(--accent);text-decoration:none}
+
+/* ── Nav ── */
+.gallery-nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:1.2rem 2rem;display:flex;align-items:center;justify-content:space-between;background:rgba(10,10,10,.85);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border-bottom:1px solid rgba(255,255,255,.06);transition:all .4s}
+.gallery-nav .logo{display:flex;align-items:center;gap:.8rem}
+.gallery-nav .logo img{width:36px;height:36px;border-radius:50%}
+.gallery-nav .logo span{font-family:var(--font-display);font-size:1.1rem;letter-spacing:.05em}
+.gallery-nav .nav-links{display:flex;gap:2rem;align-items:center}
+.gallery-nav .nav-links a{font-size:.7rem;letter-spacing:.2em;text-transform:uppercase;color:var(--muted);transition:color .4s}
+.gallery-nav .nav-links a:hover,.gallery-nav .nav-links a.active{color:var(--accent)}
+.btn{display:inline-block;padding:.7rem 1.6rem;border:1px solid var(--accent);font-family:var(--font-body);font-size:.7rem;letter-spacing:.2em;text-transform:uppercase;color:var(--text);background:transparent;cursor:pointer;transition:all .4s cubic-bezier(.16,1,.3,1)}
+.btn:hover{background:var(--accent);color:#0a0a0a;transform:translateY(-2px);box-shadow:0 8px 30px rgba(201,169,110,.2)}
+.btn-fill{background:var(--accent);color:#0a0a0a}
+
+/* ── Hero ── */
+.gallery-hero{padding:10rem 2rem 4rem;text-align:center}
+.gallery-hero .section-label{font-size:.65rem;letter-spacing:.35em;text-transform:uppercase;color:var(--accent);margin-bottom:1.5rem;display:block}
+.gallery-hero h1{font-family:var(--font-display);font-size:clamp(2.5rem,6vw,4rem);font-weight:400;margin-bottom:1rem;letter-spacing:.02em}
+.gallery-hero p{color:var(--muted);font-size:.95rem;max-width:600px;margin:0 auto}
+.divider{width:60px;height:1px;background:var(--accent);margin:2rem auto;opacity:.5}
+
+/* ── Filters ── */
+.filters{display:flex;flex-wrap:wrap;justify-content:center;gap:.6rem;padding:0 2rem 3rem;max-width:900px;margin:0 auto}
+.filter-btn{padding:.5rem 1.2rem;border:1px solid rgba(255,255,255,.1);border-radius:100px;font-family:var(--font-body);font-size:.72rem;letter-spacing:.15em;text-transform:uppercase;color:var(--muted);background:transparent;cursor:pointer;transition:all .35s cubic-bezier(.16,1,.3,1)}
+.filter-btn:hover{border-color:var(--accent);color:var(--text)}
+.filter-btn.active{border-color:var(--accent);background:var(--accent);color:#0a0a0a}
+
+/* ── Gallery Grid ── */
+.gallery-grid{columns:4;column-gap:8px;padding:0 8px;max-width:1600px;margin:0 auto}
+.gallery-item{break-inside:avoid;margin-bottom:8px;position:relative;overflow:hidden;border-radius:4px;cursor:pointer;opacity:0;transform:translateY(30px);transition:opacity .6s cubic-bezier(.16,1,.3,1),transform .6s cubic-bezier(.16,1,.3,1)}
+.gallery-item.visible{opacity:1;transform:translateY(0)}
+.gallery-item.hidden{display:none}
+.gallery-item img{width:100%;display:block;transition:transform .8s cubic-bezier(.16,1,.3,1),filter .6s}
+.gallery-item::after{content:'';position:absolute;inset:0;background:linear-gradient(180deg,transparent 60%,rgba(0,0,0,.4) 100%);opacity:0;transition:opacity .4s}
+.gallery-item:hover::after{opacity:1}
+.gallery-item:hover img{transform:scale(1.05);filter:brightness(1.05)}
+
+/* ── Lightbox ── */
+.lightbox{position:fixed;inset:0;z-index:1000;background:rgba(0,0,0,.95);backdrop-filter:blur(30px);-webkit-backdrop-filter:blur(30px);display:flex;align-items:center;justify-content:center;opacity:0;visibility:hidden;transition:opacity .4s,visibility .4s}
+.lightbox.open{opacity:1;visibility:visible}
+.lightbox-img-wrap{position:relative;max-width:92vw;max-height:88vh;display:flex;align-items:center;justify-content:center}
+.lightbox-img-wrap img{max-width:92vw;max-height:85vh;object-fit:contain;border-radius:4px;opacity:0;transform:scale(.92);transition:opacity .4s cubic-bezier(.16,1,.3,1),transform .4s cubic-bezier(.16,1,.3,1)}
+.lightbox.open .lightbox-img-wrap img.loaded{opacity:1;transform:scale(1)}
+.lightbox-close{position:absolute;top:1.5rem;right:1.5rem;width:44px;height:44px;border:1px solid rgba(255,255,255,.15);border-radius:50%;background:rgba(0,0,0,.5);color:var(--text);font-size:1.2rem;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all .3s;z-index:10}
+.lightbox-close:hover{border-color:var(--accent);color:var(--accent);transform:scale(1.1)}
+.lightbox-arrow{position:absolute;top:50%;transform:translateY(-50%);width:50px;height:50px;border:1px solid rgba(255,255,255,.12);border-radius:50%;background:rgba(0,0,0,.4);color:var(--text);font-size:1.1rem;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all .3s;z-index:10}
+.lightbox-arrow:hover{border-color:var(--accent);color:var(--accent);background:rgba(0,0,0,.7)}
+.lightbox-prev{left:1.5rem}
+.lightbox-next{right:1.5rem}
+.lightbox-counter{position:absolute;bottom:1.5rem;left:50%;transform:translateX(-50%);font-size:.75rem;letter-spacing:.15em;color:var(--muted);z-index:10}
+
+/* ── Footer ── */
+footer{background:rgba(10,10,10,.85);backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px);border-top:1px solid rgba(255,255,255,.06);padding:3rem 2rem;text-align:center;margin-top:4rem}
+footer .links{display:flex;gap:2.5rem;justify-content:center;margin-bottom:1rem;flex-wrap:wrap}
+footer .links a{font-size:.75rem;letter-spacing:.2em;text-transform:uppercase;color:var(--muted);transition:color .4s}
+footer .links a:hover{color:var(--accent)}
+footer .copy{font-size:.7rem;color:#444}
+
+/* ── WhatsApp ── */
+.whatsapp-float{position:fixed;bottom:28px;right:28px;width:60px;height:60px;background:#25D366;border-radius:50%;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 20px rgba(37,211,102,.35);z-index:999;transition:all .4s cubic-bezier(.16,1,.3,1)}
+.whatsapp-float:hover{transform:scale(1.12) translateY(-4px);box-shadow:0 8px 30px rgba(37,211,102,.5)}
+.whatsapp-float svg{width:30px;height:30px;fill:#fff}
+
+/* ── Responsive ── */
+@media(max-width:1200px){.gallery-grid{columns:3}}
+@media(max-width:768px){
+  .gallery-grid{columns:2;column-gap:6px;padding:0 6px}
+  .gallery-item{margin-bottom:6px}
+  .gallery-nav .nav-links{gap:1rem}
+  .lightbox-arrow{width:40px;height:40px;font-size:.9rem}
+  .lightbox-prev{left:.8rem}
+  .lightbox-next{right:.8rem}
+  .filters{gap:.4rem;padding:0 1rem 2rem}
+  .filter-btn{padding:.4rem .9rem;font-size:.65rem}
+}
+@media(max-width:480px){
+  .gallery-nav .nav-links a:not(.btn){display:none}
+  .gallery-hero{padding:8rem 1.5rem 3rem}
+  .lightbox-close{top:1rem;right:1rem;width:38px;height:38px}
+}
+
+/* ── Loading animation ── */
+@keyframes shimmer{0%{background-position:-400px 0}100%{background-position:400px 0}}
+.gallery-item.loading{background:linear-gradient(90deg,rgba(255,255,255,.03) 25%,rgba(255,255,255,.06) 50%,rgba(255,255,255,.03) 75%);background-size:400px 100%;animation:shimmer 1.5s infinite;min-height:200px}
+</style>
+</head>
+<body>
+
+<!-- Nav -->
+<nav class="gallery-nav">
+  <a href="/" class="logo">
+    <img src="/images/icon.png" alt="Zeno Arete">
+    <span>Zeno Arete</span>
+  </a>
+  <div class="nav-links">
+    <a href="/">Home</a>
+    <a href="/gallery.html" class="active">Gallery</a>
+    <a href="https://app-apac.thebookingbutton.com/properties/villazenoaretedirect" target="_blank" class="btn btn-fill">Book Now</a>
+  </div>
+</nav>
+
+<!-- Hero -->
+<section class="gallery-hero">
+  <span class="section-label">Explore Every Corner</span>
+  <h1>The Gallery</h1>
+  <div class="divider"></div>
+  <p>Over 200 photos capturing the essence of Villa Zeno Arete — from sunrise poolside mornings to the intimate details of each suite.</p>
+</section>
+
+<!-- Filters -->
+<div class="filters">
+  <button class="filter-btn active" data-filter="all">All</button>
+  <button class="filter-btn" data-filter="exterior">Exterior</button>
+  <button class="filter-btn" data-filter="pool">Pool & Outdoor</button>
+  <button class="filter-btn" data-filter="living">Living Spaces</button>
+  <button class="filter-btn" data-filter="bedroom">Bedrooms</button>
+  <button class="filter-btn" data-filter="bathroom">Bathrooms</button>
+  <button class="filter-btn" data-filter="dining">Dining & Kitchen</button>
+  <button class="filter-btn" data-filter="wellness">Wellness & Gym</button>
+  <button class="filter-btn" data-filter="views">Views & Surroundings</button>
+</div>
+
+<!-- Gallery Grid — populated by JS -->
+<div class="gallery-grid" id="gallery"></div>
+
+<!-- Lightbox -->
+<div class="lightbox" id="lightbox">
+  <button class="lightbox-close" aria-label="Close">✕</button>
+  <button class="lightbox-arrow lightbox-prev" aria-label="Previous">‹</button>
+  <button class="lightbox-arrow lightbox-next" aria-label="Next">›</button>
+  <div class="lightbox-img-wrap">
+    <img id="lightbox-img" src="" alt="Gallery photo">
+  </div>
+  <div class="lightbox-counter" id="lightbox-counter"></div>
+</div>
+
+<!-- Footer -->
+<footer>
+  <img src="/images/icon.png" alt="Zeno Arete emblem" style="width:60px;height:60px;border-radius:50%;margin:0 auto 1.5rem;display:block;opacity:.8">
+  <div class="links">
+    <a href="/">Home</a>
+    <a href="https://instagram.com/villazenoarete" target="_blank">Instagram</a>
+    <a href="https://www.airbnb.com/rooms/1409091642899578717" target="_blank">Airbnb</a>
+    <a href="mailto:reservations@nusanova.com">Email</a>
+  </div>
+  <p class="copy">&copy; 2026 Zeno Arete · Managed by Nusa Nova Group</p>
+</footer>
+
+<!-- WhatsApp -->
+<a href="https://wa.me/628113807533" class="whatsapp-float" target="_blank" aria-label="Chat on WhatsApp">
+  <svg viewBox="0 0 32 32"><path d="M16.004 0h-.008C7.174 0 0 7.176 0 16.004c0 3.502 1.14 6.746 3.072 9.382L1.062 31.29l6.166-1.98A15.913 15.913 0 0016.004 32C24.826 32 32 24.824 32 16.004 32 7.176 24.826 0 16.004 0zm9.31 22.612c-.39 1.1-2.294 2.1-3.162 2.178-.79.072-1.764.112-2.848-.18a25.928 25.928 0 01-2.58-.954c-4.542-1.96-7.508-6.554-7.738-6.858-.228-.306-1.87-2.49-1.87-4.748s1.184-3.37 1.604-3.83c.42-.456.918-.572 1.224-.572.306 0 .612.002.878.016.282.014.662-.106 1.036.79.39.932 1.322 3.218 1.438 3.45.114.232.19.504.038.808-.152.306-.228.496-.456.764-.228.266-.48.594-.686.798-.228.228-.466.474-.2.932.266.456 1.184 1.96 2.542 3.176 1.744 1.562 3.212 2.046 3.67 2.276.456.228.724.19.99-.114.266-.306 1.146-1.336 1.452-1.794.306-.456.612-.38 1.032-.228.42.152 2.668 1.258 3.124 1.488.456.228.764.342.878.534.114.19.114 1.1-.276 2.2z"/></svg>
+</a>
+
+<script>
+// 242 photos — generated from actual files
+const galleryData = [{"t":"/images/gallery/thumbs/DSC00654.jpg","f":"/images/gallery/full/DSC00654.jpg","c":"exterior"},{"t":"/images/gallery/thumbs/DSC00695.jpg","f":"/images/gallery/full/DSC00695.jpg","c":"exterior"},{"t":"/images/gallery/thumbs/DSC00710.jpg","f":"/images/gallery/full/DSC00710.jpg","c":"exterior"},{"t":"/images/gallery/thumbs/DSC00715.jpg","f":"/images/gallery/full/DSC00715.jpg","c":"exterior"},{"t":"/images/gallery/thumbs/DSC00725.jpg","f":"/images/gallery/full/DSC00725.jpg","c":"views"},{"t":"/images/gallery/thumbs/DSC00726.jpg","f":"/images/gallery/full/DSC00726.jpg","c":"views"},{"t":"/images/gallery/thumbs/DSC00727.jpg","f":"/images/gallery/full/DSC00727.jpg","c":"views"},{"t":"/images/gallery/thumbs/DSC00729.jpg","f":"/images/gallery/full/DSC00729.jpg","c":"views"},{"t":"/images/gallery/thumbs/DSC00736.jpg","f":"/images/gallery/full/DSC00736.jpg","c":"views"},{"t":"/images/gallery/thumbs/DSC00741.jpg","f":"/images/gallery/full/DSC00741.jpg","c":"views"},{"t":"/images/gallery/thumbs/DSC00742.jpg","f":"/images/gallery/full/DSC00742.jpg","c":"views"},{"t":"/images/gallery/thumbs/DSC00748.jpg","f":"/images/gallery/full/DSC00748.jpg","c":"views"},{"t":"/images/gallery/thumbs/DSC00752.jpg","f":"/images/gallery/full/DSC00752.jpg","c":"bathroom"},{"t":"/images/gallery/thumbs/DSC00763.jpg","f":"/images/gallery/full/DSC00763.jpg","c":"bathroom"},{"t":"/images/gallery/thumbs/DSC00764.jpg","f":"/images/gallery/full/DSC00764.jpg","c":"bathroom"},{"t":"/images/gallery/thumbs/DSC00769.jpg","f":"/images/gallery/full/DSC00769.jpg","c":"bathroom"},{"t":"/images/gallery/thumbs/DSC00770.jpg","f":"/images/gallery/full/DSC00770.jpg","c":"bathroom"},{"t":"/images/gallery/thumbs/DSC00775.jpg","f":"/images/gallery/full/DSC00775.jpg","c":"bathroom"},{"t":"/images/gallery/thumbs/DSC00776.jpg","f":"/images/gallery/full/DSC00776.jpg","c":"bathroom"},{"t":"/images/gallery/thumbs/DSC00782.jpg","f":"/images/gallery/full/DSC00782.jpg","c":"bathroom"},{"t":"/images/gallery/thumbs/DSC00790.jpg","f":"/images/gallery/full/DSC00790.jpg","c":"bathroom"},{"t":"/images/gallery/thumbs/DSC00791.jpg","f":"/images/gallery/full/DSC00791.jpg","c":"bathroom"},{"t":"/images/gallery/thumbs/DSC00795.jpg","f":"/images/gallery/full/DSC00795.jpg","c":"bathroom"},{"t":"/images/gallery/thumbs/DSC00796.jpg","f":"/images/gallery/full/DSC00796.jpg","c":"bathroom"},{"t":"/images/gallery/thumbs/DSC00797.jpg","f":"/images/gallery/full/DSC00797.jpg","c":"bathroom"},{"t":"/images/gallery/thumbs/DSC00799.jpg","f":"/images/gallery/full/DSC00799.jpg","c":"bathroom"},{"t":"/images/gallery/thumbs/DSC00815.jpg","f":"/images/gallery/full/DSC00815.jpg","c":"bedroom"},{"t":"/images/gallery/thumbs/DSC00816.jpg","f":"/images/gallery/full/DSC00816.jpg","c":"bedroom"},{"t":"/images/gallery/thumbs/DSC00819.jpg","f":"/images/gallery/full/DSC00819.jpg","c":"bedroom"},{"t":"/images/gallery/thumbs/DSC00823.jpg","f":"/images/gallery/full/DSC00823.jpg","c":"bedroom"},{"t":"/images/gallery/thumbs/DSC00824.jpg","f":"/images/gallery/full/DSC00824.jpg","c":"bedroom"},{"t":"/images/gallery/thumbs/DSC00831.jpg","f":"/images/gallery/full/DSC00831.jpg","c":"bedroom"},{"t":"/images/gallery/thumbs/DSC00832.jpg","f":"/images/gallery/full/DSC00832.jpg","c":"bedroom"},{"t":"/images/gallery/thumbs/DSC00833.jpg","f":"/images/gallery/full/DSC00833.jpg","c":"bedroom"},{"t":"/images/gallery/thumbs/DSC00836.jpg","f":"/images/gallery/full/DSC00836.jpg","c":"bedroom"},{"t":"/images/gallery/thumbs/DSC00837.jpg","f":"/images/gallery/full/DSC00837.jpg","c":"bedroom"},{"t":"/images/gallery/thumbs/DSC00842.jpg","f":"/images/gallery/full/DSC00842.jpg","c":"bedroom"},{"t":"/images/gallery/thumbs/DSC00849.jpg","f":"/images/gallery/full/DSC00849.jpg","c":"bedroom"},{"t":"/images/gallery/thumbs/DSC00852.jpg","f":"/images/gallery/full/DSC00852.jpg","c":"bedroom"},{"t":"/images/gallery/thumbs/DSC00856.jpg","f":"/images/gallery/full/DSC00856.jpg","c":"bedroom"},{"t":"/images/gallery/thumbs/DSC00857.jpg","f":"/images/gallery/full/DSC00857.jpg","c":"bedroom"},{"t":"/images/gallery/thumbs/DSC00859.jpg","f":"/images/gallery/full/DSC00859.jpg","c":"bedroom"},{"t":"/images/gallery/thumbs/DSC00862.jpg","f":"/images/gallery/full/DSC00862.jpg","c":"bedroom"},{"t":"/images/gallery/thumbs/DSC00864.jpg","f":"/images/gallery/full/DSC00864.jpg","c":"bedroom"},{"t":"/images/gallery/thumbs/DSC00865.jpg","f":"/images/gallery/full/DSC00865.jpg","c":"bedroom"},{"t":"/images/gallery/thumbs/DSC00870.jpg","f":"/images/gallery/full/DSC00870.jpg","c":"bedroom"},{"t":"/images/gallery/thumbs/DSC00871.jpg","f":"/images/gallery/full/DSC00871.jpg","c":"bedroom"},{"t":"/images/gallery/thumbs/DSC00872.jpg","f":"/images/gallery/full/DSC00872.jpg","c":"bedroom"},{"t":"/images/gallery/thumbs/DSC00873.jpg","f":"/images/gallery/full/DSC00873.jpg","c":"bedroom"},{"t":"/images/gallery/thumbs/DSC00874.jpg","f":"/images/gallery/full/DSC00874.jpg","c":"bedroom"},{"t":"/images/gallery/thumbs/DSC00877.jpg","f":"/images/gallery/full/DSC00877.jpg","c":"bedroom"},{"t":"/images/gallery/thumbs/DSC00883.jpg","f":"/images/gallery/full/DSC00883.jpg","c":"bedroom"},{"t":"/images/gallery/thumbs/DSC00884.jpg","f":"/images/gallery/full/DSC00884.jpg","c":"bedroom"},{"t":"/images/gallery/thumbs/DSC00888.jpg","f":"/images/gallery/full/DSC00888.jpg","c":"bedroom"},{"t":"/images/gallery/thumbs/DSC00889.jpg","f":"/images/gallery/full/DSC00889.jpg","c":"bedroom"},{"t":"/images/gallery/thumbs/DSC00891.jpg","f":"/images/gallery/full/DSC00891.jpg","c":"bedroom"},{"t":"/images/gallery/thumbs/DSC00893.jpg","f":"/images/gallery/full/DSC00893.jpg","c":"bedroom"},{"t":"/images/gallery/thumbs/DSC00898.jpg","f":"/images/gallery/full/DSC00898.jpg","c":"bedroom"},{"t":"/images/gallery/thumbs/DSC00904.jpg","f":"/images/gallery/full/DSC00904.jpg","c":"bedroom"},{"t":"/images/gallery/thumbs/DSC00912.jpg","f":"/images/gallery/full/DSC00912.jpg","c":"pool"},{"t":"/images/gallery/thumbs/DSC00915.jpg","f":"/images/gallery/full/DSC00915.jpg","c":"pool"},{"t":"/images/gallery/thumbs/DSC00916.jpg","f":"/images/gallery/full/DSC00916.jpg","c":"pool"},{"t":"/images/gallery/thumbs/DSC00920.jpg","f":"/images/gallery/full/DSC00920.jpg","c":"pool"},{"t":"/images/gallery/thumbs/DSC00921.jpg","f":"/images/gallery/full/DSC00921.jpg","c":"pool"},{"t":"/images/gallery/thumbs/DSC00924.jpg","f":"/images/gallery/full/DSC00924.jpg","c":"pool"},{"t":"/images/gallery/thumbs/DSC00928.jpg","f":"/images/gallery/full/DSC00928.jpg","c":"pool"},{"t":"/images/gallery/thumbs/DSC00941.jpg","f":"/images/gallery/full/DSC00941.jpg","c":"pool"},{"t":"/images/gallery/thumbs/DSC00942.jpg","f":"/images/gallery/full/DSC00942.jpg","c":"pool"},{"t":"/images/gallery/thumbs/DSC00950.jpg","f":"/images/gallery/full/DSC00950.jpg","c":"pool"},{"t":"/images/gallery/thumbs/DSC00957.jpg","f":"/images/gallery/full/DSC00957.jpg","c":"pool"},{"t":"/images/gallery/thumbs/DSC00958.jpg","f":"/images/gallery/full/DSC00958.jpg","c":"pool"},{"t":"/images/gallery/thumbs/DSC00964.jpg","f":"/images/gallery/full/DSC00964.jpg","c":"pool"},{"t":"/images/gallery/thumbs/DSC00965.jpg","f":"/images/gallery/full/DSC00965.jpg","c":"pool"},{"t":"/images/gallery/thumbs/DSC00971.jpg","f":"/images/gallery/full/DSC00971.jpg","c":"pool"},{"t":"/images/gallery/thumbs/DSC00977.jpg","f":"/images/gallery/full/DSC00977.jpg","c":"pool"},{"t":"/images/gallery/thumbs/DSC00983.jpg","f":"/images/gallery/full/DSC00983.jpg","c":"pool"},{"t":"/images/gallery/thumbs/DSC00987.jpg","f":"/images/gallery/full/DSC00987.jpg","c":"pool"},{"t":"/images/gallery/thumbs/DSC00993.jpg","f":"/images/gallery/full/DSC00993.jpg","c":"pool"},{"t":"/images/gallery/thumbs/DSC00997.jpg","f":"/images/gallery/full/DSC00997.jpg","c":"pool"},{"t":"/images/gallery/thumbs/DSC01003.jpg","f":"/images/gallery/full/DSC01003.jpg","c":"pool"},{"t":"/images/gallery/thumbs/DSC01006.jpg","f":"/images/gallery/full/DSC01006.jpg","c":"pool"},{"t":"/images/gallery/thumbs/DSC01012.jpg","f":"/images/gallery/full/DSC01012.jpg","c":"pool"},{"t":"/images/gallery/thumbs/DSC01018.jpg","f":"/images/gallery/full/DSC01018.jpg","c":"pool"},{"t":"/images/gallery/thumbs/DSC01020.jpg","f":"/images/gallery/full/DSC01020.jpg","c":"pool"},{"t":"/images/gallery/thumbs/DSC01024.jpg","f":"/images/gallery/full/DSC01024.jpg","c":"pool"},{"t":"/images/gallery/thumbs/DSC01030.jpg","f":"/images/gallery/full/DSC01030.jpg","c":"wellness"},{"t":"/images/gallery/thumbs/DSC01034.jpg","f":"/images/gallery/full/DSC01034.jpg","c":"wellness"},{"t":"/images/gallery/thumbs/DSC01038.jpg","f":"/images/gallery/full/DSC01038.jpg","c":"wellness"},{"t":"/images/gallery/thumbs/DSC01053.jpg","f":"/images/gallery/full/DSC01053.jpg","c":"wellness"},{"t":"/images/gallery/thumbs/DSC01061.jpg","f":"/images/gallery/full/DSC01061.jpg","c":"wellness"},{"t":"/images/gallery/thumbs/DSC01067.jpg","f":"/images/gallery/full/DSC01067.jpg","c":"wellness"},{"t":"/images/gallery/thumbs/DSC01077.jpg","f":"/images/gallery/full/DSC01077.jpg","c":"wellness"},{"t":"/images/gallery/thumbs/DSC01084.jpg","f":"/images/gallery/full/DSC01084.jpg","c":"wellness"},{"t":"/images/gallery/thumbs/DSC01091.jpg","f":"/images/gallery/full/DSC01091.jpg","c":"wellness"},{"t":"/images/gallery/thumbs/DSC01101.jpg","f":"/images/gallery/full/DSC01101.jpg","c":"living"},{"t":"/images/gallery/thumbs/DSC01108.jpg","f":"/images/gallery/full/DSC01108.jpg","c":"living"},{"t":"/images/gallery/thumbs/DSC01111.jpg","f":"/images/gallery/full/DSC01111.jpg","c":"living"},{"t":"/images/gallery/thumbs/DSC01122.jpg","f":"/images/gallery/full/DSC01122.jpg","c":"living"},{"t":"/images/gallery/thumbs/DSC01130.jpg","f":"/images/gallery/full/DSC01130.jpg","c":"living"},{"t":"/images/gallery/thumbs/DSC01137.jpg","f":"/images/gallery/full/DSC01137.jpg","c":"living"},{"t":"/images/gallery/thumbs/DSC01149.jpg","f":"/images/gallery/full/DSC01149.jpg","c":"living"},{"t":"/images/gallery/thumbs/DSC01162.jpg","f":"/images/gallery/full/DSC01162.jpg","c":"living"},{"t":"/images/gallery/thumbs/DSC01170.jpg","f":"/images/gallery/full/DSC01170.jpg","c":"living"},{"t":"/images/gallery/thumbs/DSC01176.jpg","f":"/images/gallery/full/DSC01176.jpg","c":"dining"},{"t":"/images/gallery/thumbs/DSC01186.jpg","f":"/images/gallery/full/DSC01186.jpg","c":"dining"},{"t":"/images/gallery/thumbs/DSC01191.jpg","f":"/images/gallery/full/DSC01191.jpg","c":"dining"},{"t":"/images/gallery/thumbs/DSC01200.jpg","f":"/images/gallery/full/DSC01200.jpg","c":"dining"},{"t":"/images/gallery/thumbs/DSC01206.jpg","f":"/images/gallery/full/DSC01206.jpg","c":"dining"},{"t":"/images/gallery/thumbs/DSC01211.jpg","f":"/images/gallery/full/DSC01211.jpg","c":"dining"},{"t":"/images/gallery/thumbs/DSC01212.jpg","f":"/images/gallery/full/DSC01212.jpg","c":"dining"},{"t":"/images/gallery/thumbs/DSC01218.jpg","f":"/images/gallery/full/DSC01218.jpg","c":"dining"},{"t":"/images/gallery/thumbs/DSC01230.jpg","f":"/images/gallery/full/DSC01230.jpg","c":"exterior"},{"t":"/images/gallery/thumbs/DSC01237.jpg","f":"/images/gallery/full/DSC01237.jpg","c":"exterior"},{"t":"/images/gallery/thumbs/DSC01245.jpg","f":"/images/gallery/full/DSC01245.jpg","c":"exterior"},{"t":"/images/gallery/thumbs/DSC01256.jpg","f":"/images/gallery/full/DSC01256.jpg","c":"exterior"},{"t":"/images/gallery/thumbs/IMG_1418.jpg","f":"/images/gallery/full/IMG_1418.jpg","c":"pool"},{"t":"/images/gallery/thumbs/IMG_1420.jpg","f":"/images/gallery/full/IMG_1420.jpg","c":"pool"},{"t":"/images/gallery/thumbs/IMG_1421.jpg","f":"/images/gallery/full/IMG_1421.jpg","c":"pool"},{"t":"/images/gallery/thumbs/IMG_1422.jpg","f":"/images/gallery/full/IMG_1422.jpg","c":"pool"},{"t":"/images/gallery/thumbs/IMG_1423.jpg","f":"/images/gallery/full/IMG_1423.jpg","c":"pool"},{"t":"/images/gallery/thumbs/IMG_1424.jpg","f":"/images/gallery/full/IMG_1424.jpg","c":"pool"},{"t":"/images/gallery/thumbs/IMG_1425.jpg","f":"/images/gallery/full/IMG_1425.jpg","c":"pool"},{"t":"/images/gallery/thumbs/IMG_1426.jpg","f":"/images/gallery/full/IMG_1426.jpg","c":"pool"},{"t":"/images/gallery/thumbs/IMG_1427.jpg","f":"/images/gallery/full/IMG_1427.jpg","c":"pool"},{"t":"/images/gallery/thumbs/IMG_1428.jpg","f":"/images/gallery/full/IMG_1428.jpg","c":"pool"},{"t":"/images/gallery/thumbs/IMG_1429.jpg","f":"/images/gallery/full/IMG_1429.jpg","c":"pool"},{"t":"/images/gallery/thumbs/IMG_1430.jpg","f":"/images/gallery/full/IMG_1430.jpg","c":"pool"},{"t":"/images/gallery/thumbs/IMG_1431.jpg","f":"/images/gallery/full/IMG_1431.jpg","c":"pool"},{"t":"/images/gallery/thumbs/IMG_1432.jpg","f":"/images/gallery/full/IMG_1432.jpg","c":"pool"},{"t":"/images/gallery/thumbs/IMG_1433.jpg","f":"/images/gallery/full/IMG_1433.jpg","c":"pool"},{"t":"/images/gallery/thumbs/IMG_1434.jpg","f":"/images/gallery/full/IMG_1434.jpg","c":"pool"},{"t":"/images/gallery/thumbs/IMG_1435.jpg","f":"/images/gallery/full/IMG_1435.jpg","c":"pool"},{"t":"/images/gallery/thumbs/IMG_1436.jpg","f":"/images/gallery/full/IMG_1436.jpg","c":"pool"},{"t":"/images/gallery/thumbs/IMG_1437.jpg","f":"/images/gallery/full/IMG_1437.jpg","c":"pool"},{"t":"/images/gallery/thumbs/PHOTO-2024-10-29-17-19-39.jpg","f":"/images/gallery/full/PHOTO-2024-10-29-17-19-39.jpg","c":"views"},{"t":"/images/gallery/thumbs/PHOTO-2024-10-29-17-19-39_2.jpg","f":"/images/gallery/full/PHOTO-2024-10-29-17-19-39_2.jpg","c":"views"},{"t":"/images/gallery/thumbs/PHOTO-2024-10-29-17-19-40.jpg","f":"/images/gallery/full/PHOTO-2024-10-29-17-19-40.jpg","c":"views"},{"t":"/images/gallery/thumbs/PHOTO-2024-10-29-17-19-40_2.jpg","f":"/images/gallery/full/PHOTO-2024-10-29-17-19-40_2.jpg","c":"views"},{"t":"/images/gallery/thumbs/PHOTO-2024-10-29-17-19-41.jpg","f":"/images/gallery/full/PHOTO-2024-10-29-17-19-41.jpg","c":"views"},{"t":"/images/gallery/thumbs/PHOTO-2024-10-29-17-19-41_2.jpg","f":"/images/gallery/full/PHOTO-2024-10-29-17-19-41_2.jpg","c":"views"},{"t":"/images/gallery/thumbs/PHOTO-2024-10-29-17-19-42.jpg","f":"/images/gallery/full/PHOTO-2024-10-29-17-19-42.jpg","c":"views"},{"t":"/images/gallery/thumbs/PHOTO-2024-10-29-17-19-42_2.jpg","f":"/images/gallery/full/PHOTO-2024-10-29-17-19-42_2.jpg","c":"views"},{"t":"/images/gallery/thumbs/PHOTO-2024-10-29-17-19-43.jpg","f":"/images/gallery/full/PHOTO-2024-10-29-17-19-43.jpg","c":"views"},{"t":"/images/gallery/thumbs/PHOTO-2024-10-29-17-19-43_2.jpg","f":"/images/gallery/full/PHOTO-2024-10-29-17-19-43_2.jpg","c":"views"},{"t":"/images/gallery/thumbs/PHOTO-2024-10-29-17-19-44.jpg","f":"/images/gallery/full/PHOTO-2024-10-29-17-19-44.jpg","c":"views"},{"t":"/images/gallery/thumbs/PHOTO-2024-10-29-17-33-43.jpg","f":"/images/gallery/full/PHOTO-2024-10-29-17-33-43.jpg","c":"views"},{"t":"/images/gallery/thumbs/PHOTO-2024-10-29-17-33-43_2.jpg","f":"/images/gallery/full/PHOTO-2024-10-29-17-33-43_2.jpg","c":"views"},{"t":"/images/gallery/thumbs/PHOTO-2024-10-29-17-33-44.jpg","f":"/images/gallery/full/PHOTO-2024-10-29-17-33-44.jpg","c":"views"},{"t":"/images/gallery/thumbs/PHOTO-2024-10-29-17-33-45.jpg","f":"/images/gallery/full/PHOTO-2024-10-29-17-33-45.jpg","c":"views"},{"t":"/images/gallery/thumbs/PHOTO-2024-10-29-17-33-45_2.jpg","f":"/images/gallery/full/PHOTO-2024-10-29-17-33-45_2.jpg","c":"views"},{"t":"/images/gallery/thumbs/PHOTO-2024-10-29-17-33-46.jpg","f":"/images/gallery/full/PHOTO-2024-10-29-17-33-46.jpg","c":"views"},{"t":"/images/gallery/thumbs/PHOTO-2024-10-29-17-33-46_2.jpg","f":"/images/gallery/full/PHOTO-2024-10-29-17-33-46_2.jpg","c":"views"},{"t":"/images/gallery/thumbs/PHOTO-2024-10-29-17-33-47.jpg","f":"/images/gallery/full/PHOTO-2024-10-29-17-33-47.jpg","c":"views"},{"t":"/images/gallery/thumbs/PHOTO-2024-10-29-17-33-47_2.jpg","f":"/images/gallery/full/PHOTO-2024-10-29-17-33-47_2.jpg","c":"views"},{"t":"/images/gallery/thumbs/PHOTO-2024-10-29-17-33-48.jpg","f":"/images/gallery/full/PHOTO-2024-10-29-17-33-48.jpg","c":"views"},{"t":"/images/gallery/thumbs/PHOTO-2024-10-29-17-33-48_2.jpg","f":"/images/gallery/full/PHOTO-2024-10-29-17-33-48_2.jpg","c":"views"},{"t":"/images/gallery/thumbs/PHOTO-2024-10-29-17-33-49.jpg","f":"/images/gallery/full/PHOTO-2024-10-29-17-33-49.jpg","c":"views"},{"t":"/images/gallery/thumbs/PHOTO-2024-10-29-17-33-49_2.jpg","f":"/images/gallery/full/PHOTO-2024-10-29-17-33-49_2.jpg","c":"views"},{"t":"/images/gallery/thumbs/PHOTO-2024-10-29-17-33-50.jpg","f":"/images/gallery/full/PHOTO-2024-10-29-17-33-50.jpg","c":"views"},{"t":"/images/gallery/thumbs/PHOTO-2024-10-29-17-33-50_2.jpg","f":"/images/gallery/full/PHOTO-2024-10-29-17-33-50_2.jpg","c":"views"},{"t":"/images/gallery/thumbs/PHOTO-2024-10-29-17-33-50_3.jpg","f":"/images/gallery/full/PHOTO-2024-10-29-17-33-50_3.jpg","c":"views"},{"t":"/images/gallery/thumbs/PHOTO-2024-10-29-17-33-51.jpg","f":"/images/gallery/full/PHOTO-2024-10-29-17-33-51.jpg","c":"views"},{"t":"/images/gallery/thumbs/PHOTO-2024-10-29-17-33-51_2.jpg","f":"/images/gallery/full/PHOTO-2024-10-29-17-33-51_2.jpg","c":"views"},{"t":"/images/gallery/thumbs/PHOTO-2024-10-29-17-33-51_3.jpg","f":"/images/gallery/full/PHOTO-2024-10-29-17-33-51_3.jpg","c":"views"},{"t":"/images/gallery/thumbs/PHOTO-2024-10-29-17-33-52.jpg","f":"/images/gallery/full/PHOTO-2024-10-29-17-33-52.jpg","c":"views"},{"t":"/images/gallery/thumbs/PHOTO-2024-10-29-17-33-52_2.jpg","f":"/images/gallery/full/PHOTO-2024-10-29-17-33-52_2.jpg","c":"views"},{"t":"/images/gallery/thumbs/PHOTO-2024-10-29-17-33-52_3.jpg","f":"/images/gallery/full/PHOTO-2024-10-29-17-33-52_3.jpg","c":"views"},{"t":"/images/gallery/thumbs/PHOTO-2024-10-29-17-33-53.jpg","f":"/images/gallery/full/PHOTO-2024-10-29-17-33-53.jpg","c":"views"},{"t":"/images/gallery/thumbs/PHOTO-2024-10-29-17-33-53_2.jpg","f":"/images/gallery/full/PHOTO-2024-10-29-17-33-53_2.jpg","c":"views"},{"t":"/images/gallery/thumbs/PHOTO-2024-10-29-17-33-54.jpg","f":"/images/gallery/full/PHOTO-2024-10-29-17-33-54.jpg","c":"views"},{"t":"/images/gallery/thumbs/PHOTO-2024-10-29-17-33-54_2.jpg","f":"/images/gallery/full/PHOTO-2024-10-29-17-33-54_2.jpg","c":"views"},{"t":"/images/gallery/thumbs/PHOTO-2024-10-29-17-33-55.jpg","f":"/images/gallery/full/PHOTO-2024-10-29-17-33-55.jpg","c":"views"},{"t":"/images/gallery/thumbs/PHOTO-2024-10-29-17-33-55_2.jpg","f":"/images/gallery/full/PHOTO-2024-10-29-17-33-55_2.jpg","c":"views"},{"t":"/images/gallery/thumbs/PHOTO-2024-10-29-17-33-56_2.jpg","f":"/images/gallery/full/PHOTO-2024-10-29-17-33-56_2.jpg","c":"views"},{"t":"/images/gallery/thumbs/VILLA_ZENO_100_of_124.jpg","f":"/images/gallery/full/VILLA_ZENO_100_of_124.jpg","c":"bedroom"},{"t":"/images/gallery/thumbs/VILLA_ZENO_101_of_124.jpg","f":"/images/gallery/full/VILLA_ZENO_101_of_124.jpg","c":"bedroom"},{"t":"/images/gallery/thumbs/VILLA_ZENO_102_of_124.jpg","f":"/images/gallery/full/VILLA_ZENO_102_of_124.jpg","c":"bedroom"},{"t":"/images/gallery/thumbs/VILLA_ZENO_103_of_124.jpg","f":"/images/gallery/full/VILLA_ZENO_103_of_124.jpg","c":"bedroom"},{"t":"/images/gallery/thumbs/VILLA_ZENO_105_of_124.jpg","f":"/images/gallery/full/VILLA_ZENO_105_of_124.jpg","c":"bedroom"},{"t":"/images/gallery/thumbs/VILLA_ZENO_109_of_124.jpg","f":"/images/gallery/full/VILLA_ZENO_109_of_124.jpg","c":"bedroom"},{"t":"/images/gallery/thumbs/VILLA_ZENO_114_of_124.jpg","f":"/images/gallery/full/VILLA_ZENO_114_of_124.jpg","c":"wellness"},{"t":"/images/gallery/thumbs/VILLA_ZENO_115_of_124.jpg","f":"/images/gallery/full/VILLA_ZENO_115_of_124.jpg","c":"wellness"},{"t":"/images/gallery/thumbs/VILLA_ZENO_116_of_124.jpg","f":"/images/gallery/full/VILLA_ZENO_116_of_124.jpg","c":"wellness"},{"t":"/images/gallery/thumbs/VILLA_ZENO_117_of_124.jpg","f":"/images/gallery/full/VILLA_ZENO_117_of_124.jpg","c":"wellness"},{"t":"/images/gallery/thumbs/VILLA_ZENO_118_of_124.jpg","f":"/images/gallery/full/VILLA_ZENO_118_of_124.jpg","c":"wellness"},{"t":"/images/gallery/thumbs/VILLA_ZENO_11_of_124.jpg","f":"/images/gallery/full/VILLA_ZENO_11_of_124.jpg","c":"exterior"},{"t":"/images/gallery/thumbs/VILLA_ZENO_120_of_124.jpg","f":"/images/gallery/full/VILLA_ZENO_120_of_124.jpg","c":"wellness"},{"t":"/images/gallery/thumbs/VILLA_ZENO_121_of_124.jpg","f":"/images/gallery/full/VILLA_ZENO_121_of_124.jpg","c":"wellness"},{"t":"/images/gallery/thumbs/VILLA_ZENO_122_of_124.jpg","f":"/images/gallery/full/VILLA_ZENO_122_of_124.jpg","c":"wellness"},{"t":"/images/gallery/thumbs/VILLA_ZENO_123_of_124.jpg","f":"/images/gallery/full/VILLA_ZENO_123_of_124.jpg","c":"wellness"},{"t":"/images/gallery/thumbs/VILLA_ZENO_124_of_124.jpg","f":"/images/gallery/full/VILLA_ZENO_124_of_124.jpg","c":"wellness"},{"t":"/images/gallery/thumbs/VILLA_ZENO_12_of_124.jpg","f":"/images/gallery/full/VILLA_ZENO_12_of_124.jpg","c":"exterior"},{"t":"/images/gallery/thumbs/VILLA_ZENO_13_of_124.jpg","f":"/images/gallery/full/VILLA_ZENO_13_of_124.jpg","c":"exterior"},{"t":"/images/gallery/thumbs/VILLA_ZENO_14_of_124.jpg","f":"/images/gallery/full/VILLA_ZENO_14_of_124.jpg","c":"exterior"},{"t":"/images/gallery/thumbs/VILLA_ZENO_15_of_124.jpg","f":"/images/gallery/full/VILLA_ZENO_15_of_124.jpg","c":"exterior"},{"t":"/images/gallery/thumbs/VILLA_ZENO_17_of_124.jpg","f":"/images/gallery/full/VILLA_ZENO_17_of_124.jpg","c":"exterior"},{"t":"/images/gallery/thumbs/VILLA_ZENO_18_of_124.jpg","f":"/images/gallery/full/VILLA_ZENO_18_of_124.jpg","c":"exterior"},{"t":"/images/gallery/thumbs/VILLA_ZENO_21_of_124.jpg","f":"/images/gallery/full/VILLA_ZENO_21_of_124.jpg","c":"exterior"},{"t":"/images/gallery/thumbs/VILLA_ZENO_22_of_124.jpg","f":"/images/gallery/full/VILLA_ZENO_22_of_124.jpg","c":"exterior"},{"t":"/images/gallery/thumbs/VILLA_ZENO_23_of_124.jpg","f":"/images/gallery/full/VILLA_ZENO_23_of_124.jpg","c":"exterior"},{"t":"/images/gallery/thumbs/VILLA_ZENO_24_of_124.jpg","f":"/images/gallery/full/VILLA_ZENO_24_of_124.jpg","c":"exterior"},{"t":"/images/gallery/thumbs/VILLA_ZENO_29_of_124.jpg","f":"/images/gallery/full/VILLA_ZENO_29_of_124.jpg","c":"pool"},{"t":"/images/gallery/thumbs/VILLA_ZENO_31_of_124.jpg","f":"/images/gallery/full/VILLA_ZENO_31_of_124.jpg","c":"pool"},{"t":"/images/gallery/thumbs/VILLA_ZENO_32_of_124.jpg","f":"/images/gallery/full/VILLA_ZENO_32_of_124.jpg","c":"pool"},{"t":"/images/gallery/thumbs/VILLA_ZENO_33_of_124.jpg","f":"/images/gallery/full/VILLA_ZENO_33_of_124.jpg","c":"pool"},{"t":"/images/gallery/thumbs/VILLA_ZENO_36_of_124.jpg","f":"/images/gallery/full/VILLA_ZENO_36_of_124.jpg","c":"pool"},{"t":"/images/gallery/thumbs/VILLA_ZENO_39_of_124.jpg","f":"/images/gallery/full/VILLA_ZENO_39_of_124.jpg","c":"pool"},{"t":"/images/gallery/thumbs/VILLA_ZENO_41_of_124.jpg","f":"/images/gallery/full/VILLA_ZENO_41_of_124.jpg","c":"pool"},{"t":"/images/gallery/thumbs/VILLA_ZENO_42_of_124.jpg","f":"/images/gallery/full/VILLA_ZENO_42_of_124.jpg","c":"pool"},{"t":"/images/gallery/thumbs/VILLA_ZENO_43_of_124.jpg","f":"/images/gallery/full/VILLA_ZENO_43_of_124.jpg","c":"pool"},{"t":"/images/gallery/thumbs/VILLA_ZENO_45_of_124.jpg","f":"/images/gallery/full/VILLA_ZENO_45_of_124.jpg","c":"pool"},{"t":"/images/gallery/thumbs/VILLA_ZENO_47_of_124.jpg","f":"/images/gallery/full/VILLA_ZENO_47_of_124.jpg","c":"pool"},{"t":"/images/gallery/thumbs/VILLA_ZENO_48_of_124.jpg","f":"/images/gallery/full/VILLA_ZENO_48_of_124.jpg","c":"pool"},{"t":"/images/gallery/thumbs/VILLA_ZENO_54_of_124.jpg","f":"/images/gallery/full/VILLA_ZENO_54_of_124.jpg","c":"living"},{"t":"/images/gallery/thumbs/VILLA_ZENO_57_of_124.jpg","f":"/images/gallery/full/VILLA_ZENO_57_of_124.jpg","c":"living"},{"t":"/images/gallery/thumbs/VILLA_ZENO_60_of_124.jpg","f":"/images/gallery/full/VILLA_ZENO_60_of_124.jpg","c":"living"},{"t":"/images/gallery/thumbs/VILLA_ZENO_62_of_124.jpg","f":"/images/gallery/full/VILLA_ZENO_62_of_124.jpg","c":"living"},{"t":"/images/gallery/thumbs/VILLA_ZENO_64_of_124.jpg","f":"/images/gallery/full/VILLA_ZENO_64_of_124.jpg","c":"living"},{"t":"/images/gallery/thumbs/VILLA_ZENO_65_of_124.jpg","f":"/images/gallery/full/VILLA_ZENO_65_of_124.jpg","c":"living"},{"t":"/images/gallery/thumbs/VILLA_ZENO_68_of_124.jpg","f":"/images/gallery/full/VILLA_ZENO_68_of_124.jpg","c":"living"},{"t":"/images/gallery/thumbs/VILLA_ZENO_6_of_124.jpg","f":"/images/gallery/full/VILLA_ZENO_6_of_124.jpg","c":"exterior"},{"t":"/images/gallery/thumbs/VILLA_ZENO_70_of_124.jpg","f":"/images/gallery/full/VILLA_ZENO_70_of_124.jpg","c":"living"},{"t":"/images/gallery/thumbs/VILLA_ZENO_71_of_124.jpg","f":"/images/gallery/full/VILLA_ZENO_71_of_124.jpg","c":"living"},{"t":"/images/gallery/thumbs/VILLA_ZENO_73_of_124.jpg","f":"/images/gallery/full/VILLA_ZENO_73_of_124.jpg","c":"bedroom"},{"t":"/images/gallery/thumbs/VILLA_ZENO_74_of_124.jpg","f":"/images/gallery/full/VILLA_ZENO_74_of_124.jpg","c":"bedroom"},{"t":"/images/gallery/thumbs/VILLA_ZENO_75_of_124.jpg","f":"/images/gallery/full/VILLA_ZENO_75_of_124.jpg","c":"bedroom"},{"t":"/images/gallery/thumbs/VILLA_ZENO_76_of_124.jpg","f":"/images/gallery/full/VILLA_ZENO_76_of_124.jpg","c":"bedroom"},{"t":"/images/gallery/thumbs/VILLA_ZENO_77_of_124.jpg","f":"/images/gallery/full/VILLA_ZENO_77_of_124.jpg","c":"bedroom"},{"t":"/images/gallery/thumbs/VILLA_ZENO_78_of_124.jpg","f":"/images/gallery/full/VILLA_ZENO_78_of_124.jpg","c":"bedroom"},{"t":"/images/gallery/thumbs/VILLA_ZENO_79_of_124.jpg","f":"/images/gallery/full/VILLA_ZENO_79_of_124.jpg","c":"bedroom"},{"t":"/images/gallery/thumbs/VILLA_ZENO_7_of_124.jpg","f":"/images/gallery/full/VILLA_ZENO_7_of_124.jpg","c":"exterior"},{"t":"/images/gallery/thumbs/VILLA_ZENO_83_of_124.jpg","f":"/images/gallery/full/VILLA_ZENO_83_of_124.jpg","c":"bedroom"},{"t":"/images/gallery/thumbs/VILLA_ZENO_84_of_124.jpg","f":"/images/gallery/full/VILLA_ZENO_84_of_124.jpg","c":"bedroom"},{"t":"/images/gallery/thumbs/VILLA_ZENO_87_of_124.jpg","f":"/images/gallery/full/VILLA_ZENO_87_of_124.jpg","c":"bedroom"},{"t":"/images/gallery/thumbs/VILLA_ZENO_89_of_124.jpg","f":"/images/gallery/full/VILLA_ZENO_89_of_124.jpg","c":"bedroom"},{"t":"/images/gallery/thumbs/VILLA_ZENO_94_of_124.jpg","f":"/images/gallery/full/VILLA_ZENO_94_of_124.jpg","c":"bedroom"},{"t":"/images/gallery/thumbs/VILLA_ZENO_95_of_124.jpg","f":"/images/gallery/full/VILLA_ZENO_95_of_124.jpg","c":"bedroom"},{"t":"/images/gallery/thumbs/VILLA_ZENO_96_of_124.jpg","f":"/images/gallery/full/VILLA_ZENO_96_of_124.jpg","c":"bedroom"},{"t":"/images/gallery/thumbs/VILLA_ZENO_97_of_124.jpg","f":"/images/gallery/full/VILLA_ZENO_97_of_124.jpg","c":"bedroom"},{"t":"/images/gallery/thumbs/VILLA_ZENO_98_of_124.jpg","f":"/images/gallery/full/VILLA_ZENO_98_of_124.jpg","c":"bedroom"},{"t":"/images/gallery/thumbs/VILLA_ZENO_99_of_124.jpg","f":"/images/gallery/full/VILLA_ZENO_99_of_124.jpg","c":"bedroom"},{"t":"/images/gallery/thumbs/shahzadihero.jpg","f":"/images/gallery/full/shahzadihero.jpg","c":"exterior"}].map(d => ({thumb: d.t, full: d.f, cat: d.c}));
+
+// ═══════════════════════════════════════════
+// RENDER GALLERY
+// ═══════════════════════════════════════════
+const grid = document.getElementById('gallery');
+const lightbox = document.getElementById('lightbox');
+const lightboxImg = document.getElementById('lightbox-img');
+const lightboxCounter = document.getElementById('lightbox-counter');
+let currentIndex = 0;
+let visibleItems = [];
+
+function renderGallery(filter) {
+  grid.innerHTML = '';
+  visibleItems = [];
+  
+  galleryData.forEach((item, i) => {
+    if (filter !== 'all' && item.cat !== filter) return;
+    
+    const div = document.createElement('div');
+    div.className = 'gallery-item loading';
+    div.dataset.index = i;
+    
+    const img = document.createElement('img');
+    img.loading = 'lazy';
+    img.alt = `Villa Zeno Arete - ${item.cat}`;
+    img.src = item.thumb;
+    img.onload = () => { div.classList.remove('loading'); };
+    img.onerror = () => { div.remove(); };
+    
+    div.appendChild(img);
+    div.addEventListener('click', () => openLightbox(i));
+    grid.appendChild(div);
+    visibleItems.push({ el: div, index: i });
+  });
+  
+  // Observe for fade-in
+  const obs = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        setTimeout(() => entry.target.classList.add('visible'), Math.random() * 150);
+        obs.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.05, rootMargin: '100px' });
+  
+  document.querySelectorAll('.gallery-item').forEach(el => obs.observe(el));
+}
+
+// ═══════════════════════════════════════════
+// FILTERS
+// ═══════════════════════════════════════════
+document.querySelectorAll('.filter-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    renderGallery(btn.dataset.filter);
+  });
+});
+
+// ═══════════════════════════════════════════
+// LIGHTBOX
+// ═══════════════════════════════════════════
+function getFilteredIndices() {
+  return visibleItems.map(v => v.index);
+}
+
+function openLightbox(index) {
+  currentIndex = index;
+  updateLightbox();
+  lightbox.classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeLightbox() {
+  lightbox.classList.remove('open');
+  document.body.style.overflow = '';
+  lightboxImg.classList.remove('loaded');
+}
+
+function updateLightbox() {
+  const indices = getFilteredIndices();
+  const pos = indices.indexOf(currentIndex);
+  const item = galleryData[currentIndex];
+  
+  lightboxImg.classList.remove('loaded');
+  const img = new Image();
+  img.onload = () => {
+    lightboxImg.src = item.full;
+    requestAnimationFrame(() => lightboxImg.classList.add('loaded'));
+  };
+  img.onerror = () => {
+    // Fallback to thumb
+    lightboxImg.src = item.thumb;
+    requestAnimationFrame(() => lightboxImg.classList.add('loaded'));
+  };
+  img.src = item.full;
+  
+  lightboxCounter.textContent = `${pos + 1} / ${indices.length}`;
+}
+
+function navigate(dir) {
+  const indices = getFilteredIndices();
+  const pos = indices.indexOf(currentIndex);
+  const newPos = (pos + dir + indices.length) % indices.length;
+  currentIndex = indices[newPos];
+  updateLightbox();
+}
+
+// Event listeners
+document.querySelector('.lightbox-close').addEventListener('click', closeLightbox);
+document.querySelector('.lightbox-prev').addEventListener('click', () => navigate(-1));
+document.querySelector('.lightbox-next').addEventListener('click', () => navigate(1));
+
+lightbox.addEventListener('click', (e) => {
+  if (e.target === lightbox) closeLightbox();
+});
+
+// Keyboard
+document.addEventListener('keydown', (e) => {
+  if (!lightbox.classList.contains('open')) return;
+  if (e.key === 'Escape') closeLightbox();
+  if (e.key === 'ArrowLeft') navigate(-1);
+  if (e.key === 'ArrowRight') navigate(1);
+});
+
+// Touch/swipe
+let touchStartX = 0;
+let touchStartY = 0;
+lightbox.addEventListener('touchstart', (e) => {
+  touchStartX = e.touches[0].clientX;
+  touchStartY = e.touches[0].clientY;
+}, { passive: true });
+
+lightbox.addEventListener('touchend', (e) => {
+  const dx = e.changedTouches[0].clientX - touchStartX;
+  const dy = e.changedTouches[0].clientY - touchStartY;
+  if (Math.abs(dx) > Math.abs(dy) && Math.abs(dx) > 50) {
+    navigate(dx > 0 ? -1 : 1);
+  }
+}, { passive: true });
+
+// Initial render
+renderGallery('all');
+</script>
+<script defer src="/_vercel/insights/script.js"></script>
+</body>
+</html>
