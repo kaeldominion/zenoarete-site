@@ -174,7 +174,9 @@ export default function GalleryClient() {
                 (e.target as HTMLElement).closest(".gallery-item")?.classList.remove("loading");
               }}
               onError={(e) => {
-                (e.target as HTMLElement).closest(".gallery-item")?.remove();
+                // Hide broken images via CSS instead of DOM removal (React manages the DOM)
+                const item = (e.target as HTMLElement).closest(".gallery-item") as HTMLElement;
+                if (item) item.style.display = "none";
               }}
             />
             {photo.description && (
