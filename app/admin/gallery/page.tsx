@@ -56,15 +56,19 @@ export default function AdminGallery() {
   };
 
   const bulkAction = (action: "hide" | "show" | "delete") => {
-    setPhotos((prev) =>
-      prev.map((p) => {
-        if (!selected.has(p.filename)) return p;
-        if (action === "hide") return { ...p, visible: false };
-        if (action === "show") return { ...p, visible: true };
-        if (action === "delete") return { ...p, visible: false };
-        return p;
-      })
-    );
+    if (action === "delete") {
+      if (!confirm(`Delete ${selected.size} photo(s)? This removes them from the gallery.`)) return;
+      setPhotos((prev) => prev.filter((p) => !selected.has(p.filename)));
+    } else {
+      setPhotos((prev) =>
+        prev.map((p) => {
+          if (!selected.has(p.filename)) return p;
+          if (action === "hide") return { ...p, visible: false };
+          if (action === "show") return { ...p, visible: true };
+          return p;
+        })
+      );
+    }
     setDirty(true);
     setSelected(new Set());
   };
@@ -80,7 +84,7 @@ export default function AdminGallery() {
   const saveAll = async () => {
     setSaving(true);
     await fetch("/api/gallery", {
-      method: "PUT",
+      method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ photos }),
     });
@@ -399,13 +403,33 @@ export default function AdminGallery() {
                 Visible
               </label>
             </div>
-            <div style={{ display: "flex", gap: "0.8rem" }}>
-              <button className="btn" onClick={() => setEditingPhoto(null)} style={{ flex: 1 }}>
-                Cancel
+            <div style={{ display: "flex", gap: "0.8rem", alignItems: "center" }}>
+              <button
+                className="btn"
+                onClick={async () => {
+                  if (!confirm(`Delete "${editingPhoto.filename}" permanently?`)) return;
+                  const res = await fetch("/api/gallery", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({ delete: { id: (editingPhoto as any).id || editingPhoto.filename } }),
+                  });
+                  if (res.ok) {
+                    setPhotos((prev) => prev.filter((p) => p.filename !== editingPhoto.filename));
+                    setEditingPhoto(null);
+                  }
+                }}
+                style={{ borderColor: "#e74c3c", color: "#e74c3c" }}
+              >
+                Delete
               </button>
-              <button className="btn btn-fill" onClick={() => updatePhoto(editingPhoto)} style={{ flex: 1 }}>
-                Save
-              </button>
+              <div style={{ display: "flex", gap: "0.8rem", flex: 1 }}>
+                <button className="btn" onClick={() => setEditingPhoto(null)} style={{ flex: 1 }}>
+                  Cancel
+                </button>
+                <button className="btn btn-fill" onClick={() => updatePhoto(editingPhoto)} style={{ flex: 1 }}>
+                  Save
+                </button>
+              </div>
             </div>
           </div>
         </div>

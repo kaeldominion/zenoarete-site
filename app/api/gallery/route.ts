@@ -34,6 +34,28 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ ok: true, photo: data[idx] });
   }
 
+  if (body.delete) {
+    const data = ensureGalleryData();
+    const id = body.delete.id;
+    const idx = data.findIndex((p) => p.id === id);
+    if (idx === -1) return NextResponse.json({ error: "Not found" }, { status: 404 });
+    const photo = data[idx];
+    // Remove from gallery data
+    data.splice(idx, 1);
+    // Reindex order
+    data.forEach((p, i) => (p.order = i));
+    saveGalleryData(data);
+    // Delete image files from disk
+    const fs = await import("fs");
+    const path = await import("path");
+    const publicDir = path.join(process.cwd(), "public");
+    for (const imgPath of [photo.thumb, photo.full]) {
+      const abs = path.join(publicDir, imgPath);
+      if (fs.existsSync(abs)) fs.unlinkSync(abs);
+    }
+    return NextResponse.json({ ok: true });
+  }
+
   if (body.reorder) {
     const data = ensureGalleryData();
     const { id, direction } = body.reorder;

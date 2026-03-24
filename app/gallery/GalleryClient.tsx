@@ -115,6 +115,21 @@ export default function GalleryClient() {
     }
   };
 
+  // Admin: delete photo
+  const deletePhoto = async (photo: Photo) => {
+    if (!confirm(`Delete "${photo.filename}" permanently? This removes the image files and cannot be undone.`)) return;
+    const res = await fetch("/api/gallery", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ delete: { id: photo.id } }),
+    });
+    if (res.ok) {
+      setPhotos((prev) => prev.filter((p) => p.id !== photo.id));
+      setEditingPhoto(null);
+      if (lightboxIndex !== null) closeLightbox();
+    }
+  };
+
   // Admin: reorder
   const reorder = async (id: string, direction: "up" | "down") => {
     const res = await fetch("/api/gallery", {
@@ -301,6 +316,7 @@ export default function GalleryClient() {
         <EditModal
           photo={editingPhoto}
           onSave={saveEdit}
+          onDelete={deletePhoto}
           onCancel={() => setEditingPhoto(null)}
         />
       )}
@@ -359,10 +375,12 @@ export default function GalleryClient() {
 function EditModal({
   photo,
   onSave,
+  onDelete,
   onCancel,
 }: {
   photo: Photo;
   onSave: (p: Photo) => void;
+  onDelete: (p: Photo) => void;
   onCancel: () => void;
 }) {
   const [form, setForm] = useState(photo);
@@ -408,20 +426,38 @@ function EditModal({
         </div>
 
         <div className="gallery-edit-actions">
-          <button className="gallery-edit-cancel" onClick={onCancel}>
-            Cancel
-          </button>
           <button
-            className="gallery-edit-save"
-            disabled={saving}
-            onClick={async () => {
-              setSaving(true);
-              await onSave(form);
-              setSaving(false);
+            className="gallery-edit-delete"
+            onClick={() => onDelete(photo)}
+            style={{
+              background: "transparent",
+              border: "1px solid #e74c3c",
+              color: "#e74c3c",
+              padding: "0.6rem 1rem",
+              borderRadius: 6,
+              cursor: "pointer",
+              fontSize: "0.85rem",
+              fontFamily: "var(--font-body)",
             }}
           >
-            {saving ? "Saving..." : "Save"}
+            Delete
           </button>
+          <div style={{ display: "flex", gap: "0.5rem", marginLeft: "auto" }}>
+            <button className="gallery-edit-cancel" onClick={onCancel}>
+              Cancel
+            </button>
+            <button
+              className="gallery-edit-save"
+              disabled={saving}
+              onClick={async () => {
+                setSaving(true);
+                await onSave(form);
+                setSaving(false);
+              }}
+            >
+              {saving ? "Saving..." : "Save"}
+            </button>
+          </div>
         </div>
       </div>
     </div>
