@@ -9,6 +9,25 @@ export default function Home() {
       <RevealObserver />
       <PixelTracker />
 
+      {/* Sticky nav */}
+      <nav className="site-nav">
+        <a href="/" className="site-nav-logo">
+          <img src="/images/icon.png" alt="Zeno Arete" />
+          <span>Zeno Arete</span>
+        </a>
+        <div className="site-nav-links">
+          <Link href="/gallery">Gallery</Link>
+          <a
+            href="https://app-apac.thebookingbutton.com/properties/villazenoaretedirect"
+            target="_blank"
+            rel="noopener"
+            className="btn btn-fill site-nav-book"
+          >
+            Book Now
+          </a>
+        </div>
+      </nav>
+
       {/* Fixed parallax background */}
       <div className="parallax-bg" />
 
@@ -227,6 +246,9 @@ export default function Home() {
             the stars. Slide into the pool from your bedroom. Wake up every day
             feeling 1% more powerful.
           </p>
+          <Link href="/gallery" className="btn reveal" style={{ alignSelf: "flex-start" }}>
+            Explore 200+ Photos
+          </Link>
         </div>
       </div>
 
