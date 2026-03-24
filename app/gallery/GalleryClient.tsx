@@ -220,16 +220,28 @@ export default function GalleryClient() {
             )}
             {isAdmin && (
               <>
-                <button
-                  className="gallery-item-edit"
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    setEditingPhoto({ ...photo });
-                  }}
-                  title="Edit photo"
-                >
-                  ✎
-                </button>
+                <div className="gallery-item-admin-btns">
+                  <button
+                    className="gallery-item-edit"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      setEditingPhoto({ ...photo });
+                    }}
+                    title="Edit photo"
+                  >
+                    ✎
+                  </button>
+                  <button
+                    className="gallery-item-edit gallery-item-delete-btn"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      deletePhoto(photo);
+                    }}
+                    title="Delete photo"
+                  >
+                    ✕
+                  </button>
+                </div>
                 <div className="gallery-item-reorder">
                   <button
                     className="gallery-reorder-btn"

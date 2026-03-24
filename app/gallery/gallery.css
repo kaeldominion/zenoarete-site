@@ -178,11 +178,24 @@
   opacity: 1;
 }
 
-/* Admin edit button on item */
-.gallery-item-edit {
+/* Admin buttons group */
+.gallery-item-admin-btns {
   position: absolute;
   top: 8px;
   right: 8px;
+  display: flex;
+  gap: 4px;
+  opacity: 0;
+  transition: opacity .3s;
+  z-index: 5;
+}
+.gallery-item:hover .gallery-item-admin-btns {
+  opacity: 1;
+}
+
+/* Admin edit button on item */
+.gallery-item-edit {
+  position: static;
   width: 32px;
   height: 32px;
   border-radius: 50%;
@@ -194,16 +207,15 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  opacity: 0;
   transition: all .3s;
-  z-index: 5;
-}
-.gallery-item:hover .gallery-item-edit {
-  opacity: 1;
 }
 .gallery-item-edit:hover {
   border-color: var(--gaccent);
   color: var(--gaccent);
+}
+.gallery-item-delete-btn:hover {
+  border-color: #e74c3c !important;
+  color: #e74c3c !important;
 }
 
 /* Admin reorder buttons */
