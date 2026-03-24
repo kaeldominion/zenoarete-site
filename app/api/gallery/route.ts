@@ -45,15 +45,7 @@ export async function POST(req: NextRequest) {
     // Reindex order
     data.forEach((p, i) => (p.order = i));
     saveGalleryData(data);
-    // Delete image files from disk
-    const fs = await import("fs");
-    const path = await import("path");
-    const publicDir = path.join(process.cwd(), "public");
-    for (const imgPath of [photo.thumb, photo.full]) {
-      const abs = path.join(publicDir, imgPath);
-      if (fs.existsSync(abs)) fs.unlinkSync(abs);
-    }
-    return NextResponse.json({ ok: true });
+    return NextResponse.json({ ok: true, deleted: { thumb: photo.thumb, full: photo.full } });
   }
 
   if (body.reorder) {
