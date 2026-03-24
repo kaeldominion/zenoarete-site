@@ -337,6 +337,9 @@ export default function Home() {
           >
             Airbnb
           </a>
+          <a href="https://maps.app.goo.gl/9tZLgd64rmGjhHrM8" target="_blank" rel="noopener">
+            Location
+          </a>
           <a href="mailto:reservations@nusanova.com">Email</a>
         </div>
         <p className="copy">
