@@ -118,15 +118,22 @@ export default function GalleryClient() {
   // Admin: delete photo
   const deletePhoto = async (photo: Photo) => {
     if (!confirm(`Delete "${photo.filename}" permanently? This removes the image files and cannot be undone.`)) return;
-    const res = await fetch("/api/gallery", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ delete: { id: photo.id } }),
-    });
-    if (res.ok) {
-      setPhotos((prev) => prev.filter((p) => p.id !== photo.id));
-      setEditingPhoto(null);
-      if (lightboxIndex !== null) closeLightbox();
+    try {
+      const res = await fetch("/api/gallery", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ delete: { id: photo.id } }),
+      });
+      if (res.ok) {
+        setPhotos((prev) => prev.filter((p) => p.id !== photo.id));
+        setEditingPhoto(null);
+        if (lightboxIndex !== null) closeLightbox();
+      } else {
+        const err = await res.json().catch(() => ({}));
+        alert(`Delete failed (${res.status}): ${err.error || "Unknown error"}`);
+      }
+    } catch (e) {
+      alert(`Delete failed: ${e instanceof Error ? e.message : "Network error"}`);
     }
   };
 
