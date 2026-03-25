@@ -38,7 +38,7 @@ export default function GalleryClient() {
   const touchStartY = useRef(0);
 
   useEffect(() => {
-    fetch("/api/gallery")
+    fetch("/api/gallery", { cache: "no-store" })
       .then((r) => r.json())
       .then((data) => {
         setPhotos(data.photos);

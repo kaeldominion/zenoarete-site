@@ -2,14 +2,18 @@ import { NextRequest, NextResponse } from "next/server";
 import { verifySession } from "@/lib/auth";
 import { ensureGalleryData, saveGalleryData, GalleryItem } from "@/lib/gallery";
 
+export const dynamic = "force-dynamic";
+export const fetchCache = "force-no-store";
+
 export async function GET() {
   const data = await ensureGalleryData();
   const isAdmin = await verifySession();
+  const headers = { "Cache-Control": "no-store, no-cache, must-revalidate" };
   if (isAdmin) {
-    return NextResponse.json({ photos: data, admin: true });
+    return NextResponse.json({ photos: data, admin: true }, { headers });
   }
   const visible = data.filter((p) => p.visible).sort((a, b) => a.order - b.order);
-  return NextResponse.json({ photos: visible, admin: false });
+  return NextResponse.json({ photos: visible, admin: false }, { headers });
 }
 
 export async function POST(req: NextRequest) {
