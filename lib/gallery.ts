@@ -40,7 +40,7 @@ export async function ensureGalleryData(): Promise<GalleryItem[]> {
     const { blobs } = await list({ prefix: BLOB_NAME });
     const blob = blobs.find((b) => b.pathname === BLOB_NAME);
     if (blob) {
-      const res = await fetch(blob.url);
+      const res = await fetch(`${blob.url}?t=${Date.now()}`, { cache: "no-store" });
       return await res.json();
     }
   } catch (e) {
