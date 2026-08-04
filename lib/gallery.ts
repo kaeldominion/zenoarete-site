@@ -1,12 +1,14 @@
 import fs from "fs";
 import path from "path";
 import { put, list } from "@vercel/blob";
+import { propertyPhotos } from "@/lib/property";
 
 export interface GalleryItem {
   id: string;
   filename: string;
   thumb: string;
   full: string;
+  title?: string;
   category: string;
   description: string;
   visible: boolean;
@@ -14,8 +16,8 @@ export interface GalleryItem {
 }
 
 const DATA_DIR = path.join(process.cwd(), "data");
-const GALLERY_FILE = path.join(DATA_DIR, "gallery.json");
-const BLOB_NAME = "gallery.json";
+const GALLERY_FILE = path.join(DATA_DIR, "gallery-v2.json");
+const BLOB_NAME = "gallery-v2.json";
 const IS_VERCEL = !!process.env.VERCEL;
 
 // Read gallery data from local file (used as fallback / seed)
@@ -26,7 +28,17 @@ function readLocalData(): GalleryItem[] {
   if (fs.existsSync(GALLERY_FILE)) {
     return JSON.parse(fs.readFileSync(GALLERY_FILE, "utf-8"));
   }
-  return [];
+  return propertyPhotos.map((photo) => ({
+    id: photo.id,
+    filename: photo.filename,
+    thumb: photo.thumb,
+    full: photo.full,
+    title: photo.categoryLabel,
+    category: photo.category,
+    description: photo.description,
+    visible: photo.visible,
+    order: photo.order,
+  }));
 }
 
 // On Vercel: read from Blob, falling back to local file (initial seed)

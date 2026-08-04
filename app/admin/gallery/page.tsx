@@ -5,7 +5,10 @@ import Link from "next/link";
 import "../../globals.css";
 
 interface Photo {
+  id: string;
   filename: string;
+  thumb: string;
+  full: string;
   title: string;
   description: string;
   category: string;
@@ -235,7 +238,7 @@ export default function AdminGallery() {
             }}
           >
             <img
-              src={`/images/gallery/thumbs/${photo.filename}`}
+              src={photo.thumb}
               alt={photo.title || photo.filename}
               style={{ width: "100%", height: "100%", objectFit: "cover" }}
               loading="lazy"
@@ -358,7 +361,7 @@ export default function AdminGallery() {
               Edit: {editingPhoto.filename}
             </h3>
             <img
-              src={`/images/gallery/thumbs/${editingPhoto.filename}`}
+              src={editingPhoto.thumb}
               alt=""
               style={{ width: "100%", maxHeight: "200px", objectFit: "cover", borderRadius: "4px", marginBottom: "1rem" }}
             />
@@ -411,7 +414,7 @@ export default function AdminGallery() {
                   const res = await fetch("/api/gallery", {
                     method: "POST",
                     headers: { "Content-Type": "application/json" },
-                    body: JSON.stringify({ delete: { id: (editingPhoto as any).id || editingPhoto.filename } }),
+                    body: JSON.stringify({ delete: { id: editingPhoto.id } }),
                   });
                   if (res.ok) {
                     setPhotos((prev) => prev.filter((p) => p.filename !== editingPhoto.filename));

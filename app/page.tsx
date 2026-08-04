@@ -1,350 +1,307 @@
 import Link from "next/link";
-import RevealObserver from "./components/RevealObserver";
 import PixelTracker from "./components/PixelTracker";
+import PropertyImage from "./components/PropertyImage";
 import WhatsAppButton from "./components/WhatsAppButton";
+import {
+  AIRBNB_URL,
+  DIRECT_BOOKING_URL,
+  WHATSAPP_URL,
+  sharedSpaces,
+  suites,
+} from "@/lib/property";
+
+const overviewPhotos = [2, 6, 35, 90, 98];
 
 export default function Home() {
   return (
     <>
-      <RevealObserver />
       <PixelTracker />
 
-      {/* Sticky nav */}
-      <nav className="site-nav">
-        <a href="/" className="site-nav-logo">
-          <img src="/images/icon.png" alt="Zeno Arete" />
+      <nav className="site-nav" aria-label="Main navigation">
+        <Link href="/" className="site-nav-logo" aria-label="Zeno Arete home">
+          <img src="/images/icon-optimized.png" alt="" width={48} height={48} />
           <span>Zeno Arete</span>
-        </a>
+        </Link>
         <div className="site-nav-links">
+          <a href="#suites">Suites</a>
+          <a href="#spaces">Spaces</a>
           <Link href="/gallery">Gallery</Link>
           <a
-            href="https://app-apac.thebookingbutton.com/properties/villazenoaretedirect"
+            href={DIRECT_BOOKING_URL}
             target="_blank"
-            rel="noopener"
-            className="btn btn-fill site-nav-book"
+            rel="noopener noreferrer"
+            className="button button-gold nav-book"
           >
-            Book Now
+            Book the villa
           </a>
         </div>
       </nav>
 
-      {/* Fixed parallax background */}
-      <div className="parallax-bg" />
+      <main>
+        <header className="hero">
+          <div className="hero-media" aria-hidden="true">
+            <PropertyImage
+              photoNumber={34}
+              alt=""
+              sizes="100vw"
+              priority
+            />
+          </div>
+          <div className="hero-shade" />
+          <div className="hero-content">
+            <img
+              src="/images/logo-optimized.png"
+              alt="Zeno Arete"
+              width={640}
+              height={640}
+              className="hero-logo"
+            />
+            <h1 className="sr-only">Villa Zeno Arete</h1>
+            <p className="hero-positioning">
+              A private sanctuary for training, recovery and luxury living
+            </p>
+            <p className="hero-location">Pererenan, Bali</p>
+            <div className="hero-actions">
+              <Link href="/gallery" className="button button-line">
+                Explore 98 photos
+              </Link>
+              <a
+                href={AIRBNB_URL}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="button button-line"
+              >
+                View on Airbnb
+              </a>
+              <a
+                href={DIRECT_BOOKING_URL}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="button button-gold"
+              >
+                Book direct
+              </a>
+            </div>
+          </div>
+          <a className="hero-scroll" href="#villa" aria-label="Explore the villa">
+            <span>Explore</span>
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M12 3v17M6 14l6 6 6-6" />
+            </svg>
+          </a>
+        </header>
 
-      {/* HERO */}
-      <header className="hero">
-        <div className="hero-content">
-          <img
-            src="/images/logo.png"
-            alt="Zeno Arete"
-            className="hero-logo"
-          />
-          <h1 className="sr-only">Zeno Arete</h1>
-          <p className="subtitle">
-            A Private Sanctuary for Training, Recovery, and Luxury Living
-          </p>
-          <p className="tagline">
-            6 Ultra-Luxe Suites · Sonos Throughout · 2 Pools · Ice Bath · Sauna
-            · Gym · Full-Time Chef
-          </p>
-          <p className="managed">
-            Managed exclusively by Nusa Nova Group.
-          </p>
-          <p className="location">Pererenan, Bali 🌴</p>
-          <div className="cta-group">
-            <Link href="/gallery" className="btn">
-              View Gallery
+        <section className="villa-overview" id="villa">
+          <div className="content-shell overview-heading">
+            <div>
+              <p className="context-line">Entire private villa in Pererenan</p>
+              <h2>Built for the whole group, without sacrificing privacy.</h2>
+            </div>
+            <div className="overview-copy">
+              <p>
+                Zeno Arete is a 1,400 m² residence with six private king suites,
+                two pools, expansive social spaces and a complete training and
+                recovery floor. It is designed for groups who want to live,
+                celebrate and reset in one place.
+              </p>
+              <a
+                href={AIRBNB_URL}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="rating-link"
+              >
+                <span aria-hidden="true">★</span> 5.0 · Guest favourite on Airbnb
+              </a>
+            </div>
+          </div>
+
+          <dl className="content-shell fact-strip">
+            <div>
+              <dt>Guests</dt>
+              <dd>12</dd>
+            </div>
+            <div>
+              <dt>Named suites</dt>
+              <dd>6</dd>
+            </div>
+            <div>
+              <dt>Bathrooms</dt>
+              <dd>6</dd>
+            </div>
+            <div>
+              <dt>Private pools</dt>
+              <dd>2</dd>
+            </div>
+            <div>
+              <dt>Residence</dt>
+              <dd>1,400 m²</dd>
+            </div>
+          </dl>
+
+          <div className="overview-gallery" aria-label="Villa Zeno Arete overview">
+            {overviewPhotos.map((photoNumber, index) => (
+              <div className={`overview-photo overview-photo-${index + 1}`} key={photoNumber}>
+                <PropertyImage
+                  photoNumber={photoNumber}
+                  alt={
+                    [
+                      "Villa Zeno Arete pool courtyard and recovery pavilion",
+                      "Villa Zeno Arete main living room",
+                      "Glass-bottom pool and terrace at Villa Zeno Arete",
+                      "Villa Zeno Arete kitchen and dining room",
+                      "Fully equipped private gym at Villa Zeno Arete",
+                    ][index]
+                  }
+                  sizes={index === 0 ? "(min-width: 900px) 50vw, 100vw" : "(min-width: 900px) 25vw, 50vw"}
+                />
+              </div>
+            ))}
+            <Link href="/gallery" className="gallery-count">
+              View all 98 photos
             </Link>
-            <a
-              href="https://www.airbnb.com/rooms/1409091642899578717?guests=1&adults=1&s=67&unique_share_id=bdc6c906-7419-49f1-8c45-10325513785a"
-              target="_blank"
-              className="btn"
-            >
-              Book on Airbnb
-            </a>
-            <a
-              href="https://app-apac.thebookingbutton.com/properties/villazenoaretedirect"
-              target="_blank"
-              className="btn btn-fill"
-            >
-              Book Direct
-            </a>
           </div>
-        </div>
-        <div className="scroll-hint">
-          <svg viewBox="0 0 24 24">
-            <polyline points="6 9 12 15 18 9" />
-          </svg>
-        </div>
-      </header>
+        </section>
 
-      {/* Philosophy */}
-      <div className="split-section" id="philosophy">
-        <div className="split-img">
-          <img
-            src="/images/villa-exterior.jpg"
-            alt="Villa Zeno Arete exterior"
-            className="reveal reveal-scale"
-          />
-        </div>
-        <div className="split-text">
-          <span className="section-label reveal reveal-fade">
-            A Retreat for the Disciplined
-          </span>
-          <blockquote className="reveal">
-            &ldquo;To move the world, you must first move yourself.&rdquo;
-          </blockquote>
-          <div
-            className="divider reveal reveal-fade"
-            style={{ marginLeft: 0 }}
-          />
-          <p className="reveal">
-            This villa was born from philosophy — not trend. Zeno Arete is a
-            1,400m² private sanctuary built for transformation. A home for
-            warriors, creators, and thinkers. Here, beauty meets intention,
-            indulgence meets structure. Every feature supports your rise — in
-            body, mind, and spirit.
-          </p>
-        </div>
-      </div>
-
-      {/* Highlights */}
-      <div className="split-section reverse">
-        <div className="split-img">
-          <img
-            src="/images/pool-lounge.jpg"
-            alt="Villa Zeno Arete poolside lounge"
-            className="reveal reveal-scale"
-          />
-        </div>
-        <div className="split-text alt-bg">
-          <span className="section-label reveal reveal-fade">
-            The Highlights
-          </span>
-          <h2 className="reveal">Crafted for Peak Living</h2>
-          <div
-            className="divider reveal reveal-fade"
-            style={{ marginLeft: 0 }}
-          />
-          <div className="highlights-list stagger">
-            <p className="reveal">
-              🛏 6 suites that feel like 5-star hotel rooms
-            </p>
-            <p className="reveal">
-              🌊 2 pools — including glass-bottom plunge + slide from master
-            </p>
-            <p className="reveal">
-              🔊 Sonos in every room, Arc Ultra &amp; Era300 in master + cinema
-            </p>
-            <p className="reveal">🧊 Ice bath · 🔥 Sauna · 💦 Jacuzzi</p>
-            <p className="reveal">
-              💪 Private gym · 🧘‍♂️ Yoga-ready outdoor spaces
-            </p>
-            <p className="reveal">
-              🍳 Full-time chef (guests just cover food costs)
-            </p>
-            <p className="reveal">
-              🎉 Indoor-outdoor entertainment areas + swim-up bar
-            </p>
-            <p className="reveal">
-              📸 Hyper-photogenic architecture + lighting throughout
-            </p>
+        <section className="suites-section" id="suites">
+          <div className="content-shell section-intro">
+            <p>Six rooms, six archetypes</p>
+            <h2>Every suite has its own name, energy and point of view.</h2>
           </div>
-        </div>
-      </div>
 
-      {/* Gym */}
-      <div className="split-section">
-        <div className="split-img">
-          <img
-            src="/images/gym.jpg"
-            alt="Villa Zeno Arete private gym"
-            className="reveal reveal-scale"
-          />
-        </div>
-        <div className="split-text">
-          <span className="section-label reveal reveal-fade">The Gym</span>
-          <h2 className="reveal">Your Private Iron Temple</h2>
-          <div
-            className="divider reveal reveal-fade"
-            style={{ marginLeft: 0 }}
-          />
-          <p className="reveal">
-            No waiting. No distractions. No excuses. The Zeno Arete gym is a
-            fully equipped private training space designed for those who
-            don&apos;t take rest days lightly. Whether you&apos;re pushing heavy
-            compound lifts, sharpening mobility, or keeping your routine locked
-            in while traveling — this isn&apos;t a hotel &ldquo;fitness
-            corner.&rdquo; It&apos;s a proper gym, built for people who actually
-            train.
-          </p>
-          <p className="reveal">
-            Start your morning with sunrise reps, end your evening with a brutal
-            finisher — then walk straight to recovery. Your body. Your schedule.
-            Your standards.
-          </p>
-        </div>
-      </div>
-
-      {/* Recovery */}
-      <div className="split-section reverse">
-        <div className="split-img">
-          <img
-            src="/images/recovery.jpg"
-            alt="Villa Zeno Arete ice bath and sauna"
-            className="reveal reveal-scale"
-          />
-        </div>
-        <div className="split-text alt-bg">
-          <span className="section-label reveal reveal-fade">
-            Ice Bath, Sauna &amp; Jacuzzi
-          </span>
-          <h2 className="reveal">The Recovery Protocol</h2>
-          <div
-            className="divider reveal reveal-fade"
-            style={{ marginLeft: 0 }}
-          />
-          <p className="reveal">
-            Train hard. Recover harder. Zeno Arete&apos;s full recovery suite is
-            built for those who understand that growth happens between sessions.
-          </p>
-          <p className="reveal">
-            Plunge into the ice bath to crush inflammation and sharpen your mind.
-            Sweat it out in the sauna to detox, destress, and reset. Then ease
-            into the jacuzzi and let everything melt away.
-          </p>
-          <p className="reveal">
-            This isn&apos;t spa-day fluff — it&apos;s a deliberate recovery
-            protocol, steps from your bedroom, available whenever you want it.
-            Cold. Heat. Release. Repeat.
-          </p>
-        </div>
-      </div>
-
-      {/* Live Intentionally */}
-      <div className="split-section">
-        <div className="split-img">
-          <img
-            src="/images/extra.jpg"
-            alt="Villa Zeno Arete lifestyle"
-            className="reveal reveal-scale"
-          />
-        </div>
-        <div className="split-text">
-          <span className="section-label reveal reveal-fade">
-            Live Intentionally
-          </span>
-          <h2 className="reveal">Train, Recover, Repeat</h2>
-          <div
-            className="divider reveal reveal-fade"
-            style={{ marginLeft: 0 }}
-          />
-          <p className="reveal">
-            This isn&apos;t just a luxury villa — it&apos;s your private dojo,
-            your content haven, your temple of play and purpose. Crush workouts
-            in the private gym. Detox in the sauna. Host intimate dinners under
-            the stars. Slide into the pool from your bedroom. Wake up every day
-            feeling 1% more powerful.
-          </p>
-          <Link href="/gallery" className="btn reveal" style={{ alignSelf: "flex-start" }}>
-            Explore 200+ Photos
-          </Link>
-        </div>
-      </div>
-
-      {/* Instagram Feed */}
-      <div
-        className="card"
-        style={{ padding: "5rem 2rem 2rem", textAlign: "center" }}
-      >
-        <span className="section-label reveal reveal-fade">
-          Follow the Journey
-        </span>
-        <h2 className="reveal" style={{ marginBottom: ".5rem" }}>
-          @villazenoarete
-        </h2>
-        <p
-          className="reveal"
-          style={{ maxWidth: 500, margin: "0 auto 2.5rem" }}
-        >
-          See the villa through the eyes of our guests and team.
-        </p>
-        <div className="reveal" style={{ maxWidth: 1100, margin: "0 auto" }}>
-          {/* @ts-expect-error behold web component */}
-          <behold-widget feed-id="f8BymEqdqKHo4aHbH4p0"></behold-widget>
-        </div>
-      </div>
-
-      {/* Booking */}
-      <div className="book-section">
-        <div className="book-content">
-          <span className="section-label reveal reveal-fade">
-            Book the Villa
-          </span>
-          <h2 className="reveal">Your Move</h2>
-          <div className="divider reveal reveal-fade" />
-          <p
-            className="reveal"
-            style={{ maxWidth: 600, margin: "0 auto 2.5rem" }}
-          >
-            Zeno Arete is available for private bookings, retreats, and
-            content-focused getaways. Full-time staff, chef-prepared meals, and
-            zero distractions. Just you, your crew, and the kind of energy that
-            realigns everything. Contact the reservations team at Nusa Nova on
-            the WhatsApp booking button and we&apos;ll get you settled in.
-          </p>
-          <div className="cta-group reveal">
-            <a
-              href="https://www.airbnb.com/rooms/1409091642899578717?guests=1&adults=1&s=67&unique_share_id=bdc6c906-7419-49f1-8c45-10325513785a"
-              target="_blank"
-              className="btn"
-            >
-              Book on Airbnb
-            </a>
-            <a
-              href="https://app-apac.thebookingbutton.com/properties/villazenoaretedirect"
-              target="_blank"
-              className="btn btn-fill"
-            >
-              Book Direct
-            </a>
+          <div className="suite-list">
+            {suites.map((suite) => (
+              <article className="suite" id={suite.key} key={suite.key}>
+                <div className="suite-gallery">
+                  {suite.photoNumbers.map((photoNumber, photoIndex) => (
+                    <div className={`suite-photo suite-photo-${photoIndex + 1}`} key={photoNumber}>
+                      <PropertyImage
+                        photoNumber={photoNumber}
+                        alt={`${suite.name} ${suite.room.toLowerCase()} at Villa Zeno Arete, view ${photoIndex + 1}`}
+                        sizes={photoIndex === 0 ? "(min-width: 900px) 46vw, 100vw" : "(min-width: 900px) 23vw, 50vw"}
+                      />
+                    </div>
+                  ))}
+                </div>
+                <div className="suite-story">
+                  <p className="suite-room">{suite.room}</p>
+                  <p className="suite-number">{String(suite.number).padStart(2, "0")}</p>
+                  <h3>{suite.name}</h3>
+                  <p className="suite-meaning">{suite.meaning}</p>
+                  <blockquote>“{suite.quote}”</blockquote>
+                  <p className="suite-copy">{suite.copy}</p>
+                  <Link href="/gallery" className="text-link">
+                    View {suite.name} and the full gallery
+                  </Link>
+                </div>
+              </article>
+            ))}
           </div>
-        </div>
-      </div>
+        </section>
 
-      {/* Footer */}
-      <footer>
-        <img
-          src="/images/icon.png"
-          alt="Zeno Arete emblem"
-          style={{
-            width: 60,
-            height: 60,
-            borderRadius: "50%",
-            margin: "0 auto 1.5rem",
-            display: "block",
-            opacity: 0.8,
-          }}
-        />
-        <div className="links">
+        <section className="shared-section" id="spaces">
+          <div className="content-shell section-intro shared-intro">
+            <p>Beyond the suites</p>
+            <h2>Spaces for movement, recovery, conversation and celebration.</h2>
+          </div>
+          <div className="shared-grid">
+            {sharedSpaces.map((space) => (
+              <article className="shared-space" key={space.category}>
+                <div className="shared-photo">
+                  <PropertyImage
+                    photoNumber={space.photoNumber}
+                    alt={`${space.title} at Villa Zeno Arete`}
+                    sizes="(min-width: 900px) 50vw, 100vw"
+                  />
+                </div>
+                <div className="shared-copy">
+                  <p className="shared-detail">{space.detail}</p>
+                  <h3>{space.title}</h3>
+                  <p>{space.copy}</p>
+                </div>
+              </article>
+            ))}
+          </div>
+        </section>
+
+        <section className="service-section">
+          <div className="content-shell service-grid">
+            <div>
+              <p className="context-line">The stay</p>
+              <h2>Private enough to disappear. Supported enough to relax.</h2>
+            </div>
+            <div className="service-copy">
+              <p>
+                Full-time villa staff look after the property throughout the
+                stay. Chef service is available, with guests covering groceries,
+                and the Nusa Nova reservations team can help organise the details
+                before arrival.
+              </p>
+              <ul className="amenity-list">
+                <li>Six king suites</li>
+                <li>Sonos in every room</li>
+                <li>Cinema-style TV room</li>
+                <li>Private gym</li>
+                <li>Sauna and ice bath</li>
+                <li>Jacuzzi and outdoor shower</li>
+                <li>Two pools and slide</li>
+                <li>Chef and villa staff</li>
+              </ul>
+            </div>
+          </div>
+        </section>
+
+        <section className="booking-section" id="book">
+          <div className="booking-media" aria-hidden="true">
+            <PropertyImage photoNumber={56} alt="" sizes="100vw" />
+          </div>
+          <div className="booking-shade" />
+          <div className="booking-content">
+            <p>Pererenan, Bali</p>
+            <h2>Your private base for the next chapter.</h2>
+            <div className="hero-actions">
+              <a
+                href={DIRECT_BOOKING_URL}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="button button-gold"
+              >
+                Book direct
+              </a>
+              <a
+                href={AIRBNB_URL}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="button button-line"
+              >
+                Check Airbnb
+              </a>
+              <a
+                href={WHATSAPP_URL}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="button button-line"
+              >
+                Ask Nusa Nova
+              </a>
+            </div>
+          </div>
+        </section>
+      </main>
+
+      <footer className="site-footer">
+        <div className="footer-brand">
+          <img src="/images/icon-optimized.png" alt="" width={72} height={72} />
+          <p>Villa Zeno Arete</p>
+          <span>Managed by Nusa Nova Group</span>
+        </div>
+        <div className="footer-links">
           <Link href="/gallery">Gallery</Link>
-          <a href="https://instagram.com/villazenoarete" target="_blank">
-            Instagram
-          </a>
-          <a
-            href="https://www.airbnb.com/rooms/1409091642899578717"
-            target="_blank"
-          >
-            Airbnb
-          </a>
-          <a href="https://maps.app.goo.gl/9tZLgd64rmGjhHrM8" target="_blank" rel="noopener">
-            Location
-          </a>
+          <a href="https://instagram.com/villazenoarete" target="_blank" rel="noopener noreferrer">Instagram</a>
+          <a href={AIRBNB_URL} target="_blank" rel="noopener noreferrer">Airbnb</a>
+          <a href="https://maps.app.goo.gl/9tZLgd64rmGjhHrM8" target="_blank" rel="noopener noreferrer">Location</a>
           <a href="mailto:reservations@nusanova.com">Email</a>
         </div>
-        <p className="copy">
-          &copy; 2026 Zeno Arete · Managed by Nusa Nova Group
-        </p>
+        <p className="footer-copy">© 2026 Zeno Arete · Pererenan, Bali</p>
       </footer>
 
       <WhatsAppButton />

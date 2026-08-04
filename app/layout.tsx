@@ -1,24 +1,45 @@
 import type { Metadata } from "next";
 import Script from "next/script";
+import { Inter, Playfair_Display } from "next/font/google";
 import "./globals.css";
 
+const inter = Inter({
+  subsets: ["latin"],
+  variable: "--font-body",
+  display: "swap",
+});
+
+const playfair = Playfair_Display({
+  subsets: ["latin"],
+  variable: "--font-display",
+  display: "swap",
+});
+
 export const metadata: Metadata = {
-  title: "Zeno Arete — Private Luxury Villa in Pererenan, Bali",
+  metadataBase: new URL("https://zenoarete.com"),
+  title: "Zeno Arete | Six-Suite Private Villa in Pererenan, Bali",
   description:
-    "A Private Sanctuary for Training, Recovery, and Luxury Living. 6 Ultra-Luxe Suites, 2 Pools, Ice Bath, Sauna, Gym, Full-Time Chef. Pererenan, Bali.",
+    "A 1,400 m² private villa with six named king suites, two pools, gym, sauna, ice bath, jacuzzi, cinema and full-time staff in Pererenan, Bali.",
   openGraph: {
-    title: "Zeno Arete — Luxury Villa, Bali",
+    title: "Zeno Arete | Private Villa in Pererenan, Bali",
     description:
-      "A Private Sanctuary for Training, Recovery, and Luxury Living. 6 Suites · 2 Pools · Ice Bath · Sauna · Gym · Chef.",
+      "Six named suites, two pools, private gym, complete recovery facilities and full-time staff in a 1,400 m² Pererenan residence.",
     type: "website",
     url: "https://zenoarete.com",
-    images: ["/images/hero.jpg"],
+    images: [
+      {
+        url: "/images/airbnb/photo-034-1440.webp",
+        width: 1440,
+        height: 960,
+        alt: "Villa Zeno Arete pool courtyard in Pererenan, Bali",
+      },
+    ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "Zeno Arete — Luxury Villa, Bali",
+    title: "Zeno Arete | Private Villa in Pererenan, Bali",
     description:
-      "A Private Sanctuary for Training, Recovery, and Luxury Living.",
+      "Six named suites, two pools, private gym and complete recovery facilities.",
   },
   icons: {
     icon: [
@@ -36,10 +57,10 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en">
+    <html lang="en" className={`${inter.variable} ${playfair.variable}`}>
       <head>
         {/* Meta Pixel Code */}
-        <Script id="meta-pixel" strategy="afterInteractive">{`
+        <Script id="meta-pixel" strategy="lazyOnload">{`
           !function(f,b,e,v,n,t,s)
           {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
           n.callMethod.apply(n,arguments):n.queue.push(arguments)};
@@ -60,21 +81,13 @@ export default function RootLayout({
             alt=""
           />
         </noscript>
-        <Script id="behold-widget" strategy="afterInteractive">{`
-          (() => { const d=document,s=d.createElement("script");s.type="module";s.src="https://w.behold.so/widget.js";d.head.append(s); })();
-        `}</Script>
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link
-          href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap"
-          rel="stylesheet"
-        />
       </head>
       <body>
         {children}
         <Script
           defer
           src="/_vercel/insights/script.js"
-          strategy="afterInteractive"
+          strategy="lazyOnload"
         />
       </body>
     </html>

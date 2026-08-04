@@ -1,5 +1,6 @@
 "use client";
 import { useEffect, useState, useCallback, useRef } from "react";
+import Link from "next/link";
 import "./gallery.css";
 
 interface Photo {
@@ -15,14 +16,16 @@ interface Photo {
 
 const CATEGORIES = [
   { key: "all", label: "All" },
-  { key: "exterior", label: "Exterior" },
-  { key: "pool", label: "Pool & Outdoor" },
-  { key: "living", label: "Living Spaces" },
-  { key: "bedroom", label: "Bedrooms" },
-  { key: "bathroom", label: "Bathrooms" },
+  { key: "zeus", label: "Zeus" },
+  { key: "athena", label: "Athena" },
+  { key: "apollo", label: "Apollo" },
+  { key: "artemis", label: "Artemis" },
+  { key: "ares", label: "Ares" },
+  { key: "selene", label: "Selene" },
+  { key: "pools", label: "Pools & Outdoor" },
+  { key: "living", label: "Living & Cinema" },
   { key: "dining", label: "Dining & Kitchen" },
-  { key: "wellness", label: "Wellness & Gym" },
-  { key: "views", label: "Views & Surroundings" },
+  { key: "wellness", label: "Training & Recovery" },
 ];
 
 export default function GalleryClient() {
@@ -33,7 +36,6 @@ export default function GalleryClient() {
   const [lightboxIndex, setLightboxIndex] = useState<number | null>(null);
   const [lightboxLoaded, setLightboxLoaded] = useState(false);
   const [editingPhoto, setEditingPhoto] = useState<Photo | null>(null);
-  const gridRef = useRef<HTMLDivElement>(null);
   const touchStartX = useRef(0);
   const touchStartY = useRef(0);
 
@@ -46,27 +48,6 @@ export default function GalleryClient() {
         setLoading(false);
       });
   }, []);
-
-  // IntersectionObserver for fade-in
-  useEffect(() => {
-    if (loading) return;
-    const obs = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            setTimeout(
-              () => entry.target.classList.add("visible"),
-              Math.random() * 150
-            );
-            obs.unobserve(entry.target);
-          }
-        });
-      },
-      { threshold: 0.05, rootMargin: "100px" }
-    );
-    gridRef.current?.querySelectorAll(".gallery-item").forEach((el) => obs.observe(el));
-    return () => obs.disconnect();
-  }, [loading, activeFilter, photos]);
 
   const filtered =
     activeFilter === "all"
@@ -117,7 +98,7 @@ export default function GalleryClient() {
 
   // Admin: delete photo
   const deletePhoto = async (photo: Photo) => {
-    if (!confirm(`Delete "${photo.filename}" permanently? This removes the image files and cannot be undone.`)) return;
+    if (!confirm(`Remove "${photo.filename}" from the property gallery? This cannot be undone from the admin screen.`)) return;
     try {
       const res = await fetch("/api/gallery", {
         method: "POST",
@@ -157,14 +138,14 @@ export default function GalleryClient() {
     <div style={{ background: "#0a0a0a", minHeight: "100vh" }}>
       {/* Nav */}
       <nav className="gallery-nav">
-        <a href="/" className="gallery-nav-logo">
+        <Link href="/" className="gallery-nav-logo">
           {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img src="/images/icon.png" alt="Zeno Arete" />
+          <img src="/images/icon-optimized.png" alt="" />
           <span>Zeno Arete</span>
-        </a>
+        </Link>
         <div className="gallery-nav-links">
-          <a href="/">Home</a>
-          <a href="/gallery" className="active">Gallery</a>
+          <Link href="/">Home</Link>
+          <Link href="/gallery" className="active">Gallery</Link>
           <a href="https://app-apac.thebookingbutton.com/properties/villazenoaretedirect" target="_blank" rel="noopener" className="btn btn-fill">Book Now</a>
         </div>
       </nav>
@@ -175,8 +156,8 @@ export default function GalleryClient() {
         <h1>The Gallery</h1>
         <div className="gallery-divider" />
         <p>
-          Over 200 photos capturing the essence of Villa Zeno Arete — from
-          sunrise poolside mornings to the intimate details of each suite.
+          The complete set of 98 current Airbnb photographs, organised around
+          all six named suites and the villa&apos;s shared spaces.
         </p>
       </section>
 
@@ -194,7 +175,8 @@ export default function GalleryClient() {
       </div>
 
       {/* Grid */}
-      <div className="gallery-grid" ref={gridRef}>
+      <div className="gallery-grid" aria-live="polite">
+        {loading && <p className="gallery-loading-copy">Loading the property tour...</p>}
         {filtered.map((photo, i) => (
           <div
             key={photo.id}
@@ -204,7 +186,9 @@ export default function GalleryClient() {
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
               src={photo.thumb}
-              alt={`Villa Zeno Arete - ${photo.category}`}
+              srcSet={`${photo.thumb} 480w, ${photo.thumb.replace("-480.webp", "-960.webp")} 960w`}
+              sizes="(min-width: 1200px) 25vw, (min-width: 768px) 33vw, 50vw"
+              alt={photo.description || `Villa Zeno Arete ${photo.category}`}
               loading="lazy"
               onLoad={(e) => {
                 (e.target as HTMLElement).closest(".gallery-item")?.classList.remove("loading");
@@ -313,7 +297,7 @@ export default function GalleryClient() {
             /* eslint-disable-next-line @next/next/no-img-element */
             <img
               src={currentPhoto.full}
-              alt={`Villa Zeno Arete - ${currentPhoto.category}`}
+              alt={currentPhoto.description || `Villa Zeno Arete ${currentPhoto.category}`}
               className={lightboxLoaded ? "loaded" : ""}
               onLoad={() => setLightboxLoaded(true)}
               onError={(e) => {
@@ -344,8 +328,8 @@ export default function GalleryClient() {
       <footer className="gallery-footer">
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
-          src="/images/icon.png"
-          alt="Zeno Arete emblem"
+          src="/images/icon-optimized.png"
+          alt=""
           style={{
             width: 60,
             height: 60,
@@ -356,7 +340,7 @@ export default function GalleryClient() {
           }}
         />
         <div className="gallery-footer-links">
-          <a href="/">Home</a>
+          <Link href="/">Home</Link>
           <a href="https://instagram.com/villazenoarete" target="_blank" rel="noopener">
             Instagram
           </a>
